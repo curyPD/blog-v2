@@ -1,0 +1,64 @@
+{
+    "articles": {
+        "one": {
+            "id": "one",
+            "title": "How to learn a language",
+            "created": "2023-03-17T07:09:27.152Z",
+            "last_modified": "2023-03-17T07:10:01.063Z",
+            "image": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "content": "<h2>Contents</h2><p></p><ol><li>Where to start</li><li>Where to finish</li></ol>",
+            "likes": {
+                "s4ZBnly0OIyRphC0bieMt2nw5n4h": true,
+                "UVDUB4SKZB3g366obz871MnSV1ZO": true
+            },
+            "comments": {
+                "s4ZBnly0OIyRphC0bieMt2nw5n4h": "Awesome",
+                "UVDUB4SKZB3g366obz871MnSV1ZO": "What are you, a polyglot?"
+            }
+        },
+        "two": {
+            "id": "two",
+            "title": "Best Japanese learning resources",
+            "created": "2023-03-17T07:10:27.152Z",
+            "last_modified": "2023-03-17T07:11:01.063Z",
+            "image": "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            "content": "<p>Welcome, I'm happy to see you here</p>",
+            "likes": {
+                "s4ZBnly0OIyRphC0bieMt2nw5n4h": true,
+                "UVDUB4SKZB3g366obz871MnSV1ZO": true
+            },
+            "comments": {
+                "s4ZBnly0OIyRphC0bieMt2nw5n4h": "I knew I wasn't using the right resources, thank you so much!",
+                "UVDUB4SKZB3g366obz871MnSV1ZO": "I apologize for the behavior of my passion under the previous post"
+            }
+        }
+    },
+    "users": {
+        "s4ZBnly0OIyRphC0bieMt2nw5n4h": {
+            "uid": "s4ZBnly0OIyRphC0bieMt2nw5n4h",
+            "name": "Aki Elarmote",
+            "email": "kimome2340@oniecan.com",
+            "role": "subscriber",
+            "photo_url": "https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80",
+            "liked_articles": {
+                "one": true
+            },
+            "commented_articles": {
+                "one": true
+            }
+        },
+        "UVDUB4SKZB3g366obz871MnSV1ZO": {
+            "uid": "UVDUB4SKZB3g366obz871MnSV1ZO",
+            "name": "Roman Druzhinin",
+            "email": "romandruzhinin2003@gmail.com",
+            "role": "author",
+            "photo_url": "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80",
+            "liked_articles": {
+                "one": true
+            },
+            "commented_articles": {
+                "one": true
+            }
+        }
+    }
+}

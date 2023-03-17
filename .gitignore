@@ -25,6 +25,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# env
+.env
+
 # local env files
 .env*.local
 
@@ -34,3 +37,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase
+database.rules.json
+database-debug.log
+firebase.json
+firebase-debug.log
+storage.rules
+ui-debug.log
