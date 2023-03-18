@@ -1,8 +1,9 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import useControlledForm from "@/hooks/useControlledForm";
 
 type StateType = {
     email: string;
@@ -10,17 +11,15 @@ type StateType = {
 };
 
 export default function Login() {
-    const [input, setInput] = useState<StateType>({ email: "", password: "" });
+    const { input, handleChange } = useControlledForm<StateType>({
+        email: "",
+        password: "",
+    });
 
     const [signInWithEmailAndPassword, , loading, error] =
         useSignInWithEmailAndPassword(auth);
 
     const router = useRouter();
-
-    function handleChange(e: ChangeEvent): void {
-        const { name, value } = e.target as HTMLInputElement;
-        setInput((prevInput) => ({ ...prevInput, [name]: value }));
-    }
 
     async function handleSubmit(e: FormEvent): Promise<void> {
         e.preventDefault();

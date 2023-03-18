@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
@@ -6,6 +6,7 @@ import {
     useCreateUserWithEmailAndPassword,
     useUpdateProfile,
 } from "react-firebase-hooks/auth";
+import useControlledForm from "@/hooks/useControlledForm";
 
 type StateType = {
     name: string;
@@ -15,24 +16,20 @@ type StateType = {
 };
 
 export default function Signup() {
-    const [input, setInput] = useState<StateType>({
+    const { input, handleChange } = useControlledForm<StateType>({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
     });
+
     const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
 
     const [createUserWithEmailAndPassword, , loading, error] =
         useCreateUserWithEmailAndPassword(auth);
-    const [updateProfile, , updateError] = useUpdateProfile(auth);
+    const [updateProfile] = useUpdateProfile(auth);
 
     const router = useRouter();
-
-    function handleChange(e: ChangeEvent): void {
-        const { name, value } = e.target as HTMLInputElement;
-        setInput((prevInput) => ({ ...prevInput, [name]: value }));
-    }
 
     async function handleSubmit(e: FormEvent): Promise<void> {
         e.preventDefault();
@@ -115,8 +112,6 @@ export default function Signup() {
                 </div>
 
                 {error && <div>Error: {error.message}</div>}
-
-                {updateError && <div>Error: {updateError.message}</div>}
 
                 {!passwordsMatch && <div>Error: Passwords do not match</div>}
             </form>
