@@ -1,21 +1,28 @@
+import Link from "next/link";
 import { auth } from "../firebase/firebase";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
-import Link from "next/link";
+import { useUserData } from "@/context/UserDataProvider";
 
 export default function Header() {
-    const [user, loading, error] = useAuthState(auth);
+    // const [user, loading, error] = useAuthState(auth);
+    const { userData, userDataLoading } = useUserData();
     const [signOut, signOutLoading] = useSignOut(auth);
 
     return (
-        <header className="bg-green-200 flex items-center p-3">
-            {loading || signOutLoading ? (
+        <header className="bg-green-200 flex items-center justify-between p-3">
+            <div className="flex items-center gap-4">
+                <Link href="/">Home</Link>
+                {userData?.role.admin && (
+                    <Link href="/dashboard">Dashboard</Link>
+                )}
+            </div>
+            {userDataLoading || signOutLoading ? (
                 <div>Loading...</div>
-            ) : user ? (
+            ) : userData ? (
                 <button onClick={signOut}>Sign Out</button>
             ) : (
                 <Link href="/login">Log In</Link>
             )}
-            {error && <div className="absolute">Error: {error.message}</div>}
         </header>
     );
 }
