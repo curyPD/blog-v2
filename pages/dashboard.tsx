@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useUserData } from "@/context/UserDataProvider";
 import { useEffect } from "react";
+import { useUserData } from "@/context/UserDataProvider";
 
 export default function Dashboard() {
     const { userData, userDataLoading } = useUserData();

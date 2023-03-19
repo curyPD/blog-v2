@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
@@ -7,16 +7,10 @@ import {
     useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import useControlledForm from "@/hooks/useControlledForm";
-
-type StateType = {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-};
+import { SignUpFormStateType } from "@/types/types";
 
 export default function Signup() {
-    const { input, handleChange } = useControlledForm<StateType>({
+    const { input, handleChange } = useControlledForm<SignUpFormStateType>({
         name: "",
         email: "",
         password: "",
@@ -31,7 +25,7 @@ export default function Signup() {
 
     const router = useRouter();
 
-    async function handleSubmit(e: FormEvent): Promise<void> {
+    async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
         setPasswordsMatch(true);
         if (input.password !== input.confirmPassword) {

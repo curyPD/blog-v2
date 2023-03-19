@@ -1,17 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 
 import data from "../../dummy-data/data.json";
-
-type ArticleType = {
-    id: string;
-    title: string;
-    created: string;
-    last_modified: string;
-    image: string;
-    content: string;
-    likes: Record<string, boolean>;
-    comments: Record<string, string>;
-};
+import { ArticleType } from "../../types/types";
 
 export default function Article({ article }: { article: ArticleType }) {
     console.log(article);
@@ -20,15 +10,12 @@ export default function Article({ article }: { article: ArticleType }) {
         Date.parse(article.created)
     ).toLocaleDateString("en-US");
 
-    const numLikes: number = Object.keys(article.likes).length;
-
     return (
         <div>
             <h1>{article.title}</h1>
             <span>{createdDate}</span>
             <img src={article.image} alt="" />
             <article dangerouslySetInnerHTML={{ __html: article.content }} />
-            <span>♥ {numLikes}</span>
         </div>
     );
 }

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { auth } from "../firebase/firebase";
-import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
+import { useSignOut } from "react-firebase-hooks/auth";
 import { useUserData } from "@/context/UserDataProvider";
 
 export default function Header() {
-    // const [user, loading, error] = useAuthState(auth);
     const { userData, userDataLoading } = useUserData();
     const [signOut, signOutLoading] = useSignOut(auth);
 

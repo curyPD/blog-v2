@@ -4,18 +4,7 @@ import { GetStaticProps } from "next";
 
 import data from "../dummy-data/data.json";
 
-import Header from "@/components/Header";
-
-type ArticleType = {
-    id: string;
-    title: string;
-    created: string;
-    last_modified: string;
-    image: string;
-    content: string;
-    likes: Record<string, boolean>;
-    comments: Record<string, string>;
-};
+import { ArticleType } from "@/types/types";
 
 export default function Home({ articles }: { articles: ArticleType[] }) {
     return (
@@ -27,7 +16,6 @@ export default function Home({ articles }: { articles: ArticleType[] }) {
                     content="width=device-width, initial-scale=1"
                 />
             </Head>
-            <Header />
             <main>
                 <h1 className="text-slate-900 text-3xl font-bold">
                     Polyglot Dream

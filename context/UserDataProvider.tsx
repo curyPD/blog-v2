@@ -8,16 +8,10 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebase";
 import { get, ref, set } from "firebase/database";
-
-type StateType = {
-    uid: string;
-    name: string;
-    email: string;
-    role: Record<string, boolean>;
-};
+import { UserDataType } from "../types/types";
 
 function useUserDataContext() {
-    const [userData, setUserData] = useState<StateType | null>(null);
+    const [userData, setUserData] = useState<UserDataType | null>(null);
     const [userDataLoading, setUserDataLoading] = useState<boolean>(false);
     const [user] = useAuthState(auth);
     useEffect(() => {

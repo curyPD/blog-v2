@@ -1,17 +1,13 @@
-import { FormEvent } from "react";
+import { type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import useControlledForm from "@/hooks/useControlledForm";
-
-type StateType = {
-    email: string;
-    password: string;
-};
+import { LoginFormStateType } from "@/types/types";
 
 export default function Login() {
-    const { input, handleChange } = useControlledForm<StateType>({
+    const { input, handleChange } = useControlledForm<LoginFormStateType>({
         email: "",
         password: "",
     });
@@ -21,7 +17,7 @@ export default function Login() {
 
     const router = useRouter();
 
-    async function handleSubmit(e: FormEvent): Promise<void> {
+    async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
         const credential = await signInWithEmailAndPassword(
             input.email,
