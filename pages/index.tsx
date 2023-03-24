@@ -4,7 +4,7 @@ import { GetStaticProps } from "next";
 
 import data from "../dummy-data/data.json";
 
-import { ArticleType } from "@/types/types";
+import { ArticleType } from "@/types";
 
 export default function Home({ articles }: { articles: ArticleType[] }) {
     return (

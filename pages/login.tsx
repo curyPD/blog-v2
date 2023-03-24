@@ -4,10 +4,14 @@ import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import useControlledForm from "@/hooks/useControlledForm";
-import { LoginFormStateType } from "@/types/types";
+
+type StateType = {
+    email: string;
+    password: string;
+};
 
 export default function Login() {
-    const { input, handleChange } = useControlledForm<LoginFormStateType>({
+    const { input, handleChange } = useControlledForm<StateType>({
         email: "",
         password: "",
     });

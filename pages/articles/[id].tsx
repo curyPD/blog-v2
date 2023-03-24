@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 
 import data from "../../dummy-data/data.json";
-import { ArticleType } from "../../types/types";
+import { ArticleType } from "../../types";
 
 export default function Article({ article }: { article: ArticleType }) {
     console.log(article);
@@ -11,12 +11,12 @@ export default function Article({ article }: { article: ArticleType }) {
     ).toLocaleDateString("en-US");
 
     return (
-        <div>
+        <main>
             <h1>{article.title}</h1>
             <span>{createdDate}</span>
             <img src={article.image} alt="" />
             <article dangerouslySetInnerHTML={{ __html: article.content }} />
-        </div>
+        </main>
     );
 }
 

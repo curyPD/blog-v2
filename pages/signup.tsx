@@ -7,10 +7,16 @@ import {
     useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import useControlledForm from "@/hooks/useControlledForm";
-import { SignUpFormStateType } from "@/types/types";
+
+type StateType = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+};
 
 export default function Signup() {
-    const { input, handleChange } = useControlledForm<SignUpFormStateType>({
+    const { input, handleChange } = useControlledForm<StateType>({
         name: "",
         email: "",
         password: "",

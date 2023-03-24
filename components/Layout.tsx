@@ -1,5 +1,9 @@
+import { ReactNode } from "react";
 import Header from "./Header";
-import { LayoutPropsType } from "../types/types";
+
+type LayoutPropsType = {
+    children: ReactNode | ReactNode[];
+};
 
 export default function Layout({ children }: LayoutPropsType) {
     return (

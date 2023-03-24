@@ -8,7 +8,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebase";
 import { get, ref, set } from "firebase/database";
-import { UserDataType } from "../types/types";
+import { UserDataType, ChildrenType } from "../types";
 
 function useUserDataContext() {
     const [userData, setUserData] = useState<UserDataType | null>(null);
@@ -51,8 +51,6 @@ const initContextState: UseUserDataContextType = {
 
 export const UserDataContext =
     createContext<UseUserDataContextType>(initContextState);
-
-type ChildrenType = { children: ReactElement };
 
 export default function AuthProvider({ children }: ChildrenType): ReactElement {
     return (

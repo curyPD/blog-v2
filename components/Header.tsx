@@ -8,7 +8,7 @@ export default function Header() {
     const [signOut, signOutLoading] = useSignOut(auth);
 
     return (
-        <header className="bg-green-200 flex items-center justify-between p-3">
+        <header className="flex items-center justify-between p-3">
             <div className="flex items-center gap-4">
                 <Link href="/">Home</Link>
                 {userData?.role.admin && (

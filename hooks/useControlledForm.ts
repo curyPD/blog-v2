@@ -1,5 +1,9 @@
 import { useState, type ChangeEvent } from "react";
-import { UseControlledFormType } from "../types/types";
+
+type UseControlledFormType<T> = {
+    input: T;
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
 
 function useControlledForm<T>(initState: T): UseControlledFormType<T> {
     const [input, setInput] = useState<T>(initState);

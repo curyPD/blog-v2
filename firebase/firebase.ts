@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { getStorage, connectStorageEmulator } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -19,8 +19,9 @@ export const db = getDatabase(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 
-if (process.env.NEXT_PUBLIC_ENV === "development") {
-    console.log("Development");
-    connectDatabaseEmulator(db, "localhost", 9000);
-    connectAuthEmulator(auth, "http://localhost:9099");
-}
+// if (process.env.NEXT_PUBLIC_ENV === "development") {
+//     console.log("Development");
+//     connectDatabaseEmulator(db, "localhost", 9000);
+//     connectAuthEmulator(auth, "http://localhost:9099");
+//     connectStorageEmulator(storage, "localhost", 9199);
+// }
