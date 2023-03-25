@@ -1,4 +1,4 @@
-import { useReducer, ChangeEvent } from "react";
+import { useReducer } from "react";
 import { ref } from "firebase/database";
 import { db } from "@/firebase/firebase";
 import { useListVals } from "react-firebase-hooks/database";
@@ -16,12 +16,14 @@ type StateType = {
     selectedArticleId: string;
     filePreviewURL: string;
     title: string;
+    articleIdToDelete: string;
 };
 
 const initState: StateType = {
     selectedArticleId: "",
     title: "",
     filePreviewURL: "",
+    articleIdToDelete: "",
 };
 
 enum REDUCER_ACTION_TYPE {
@@ -29,6 +31,8 @@ enum REDUCER_ACTION_TYPE {
     FILE_INPUT,
     SELECT_ARTICLE,
     CANCEL_SELECT,
+    STAGE_ARTICLE_DELETE,
+    CANCEL_ARTICLE_DELETE,
 }
 
 type ReducerAction = {
@@ -55,6 +59,7 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 );
             const { title, filePreviewURL, selectedArticleId } = action.payload;
             return {
+                ...state,
                 selectedArticleId,
                 title,
                 filePreviewURL,
@@ -62,9 +67,27 @@ function reducer(state: StateType, action: ReducerAction): StateType {
         }
         case REDUCER_ACTION_TYPE.CANCEL_SELECT: {
             return {
+                ...state,
                 selectedArticleId: "",
                 title: "",
                 filePreviewURL: "",
+            };
+        }
+        case REDUCER_ACTION_TYPE.STAGE_ARTICLE_DELETE: {
+            if (!action.payload)
+                throw new Error(
+                    "action.payload missing in STAGE_ARTICLE_DELETE action"
+                );
+            const { articleIdToDelete } = action.payload;
+            return {
+                ...state,
+                articleIdToDelete,
+            };
+        }
+        case REDUCER_ACTION_TYPE.CANCEL_ARTICLE_DELETE: {
+            return {
+                ...state,
+                articleIdToDelete: "",
             };
         }
 
@@ -83,20 +106,10 @@ export function useDashboard() {
         content: "<p>Hello World! 🌎️</p>",
     });
 
-    function handleTitleChange(e: ChangeEvent<HTMLInputElement>) {
-        dispatch({
-            type: REDUCER_ACTION_TYPE.TITLE_INPUT,
-            payload: { ...state, title: e.target.value },
-        });
-    }
-
-    async function handleAttachFile(e: ChangeEvent<HTMLInputElement>) {
-        if (!e.target.files) return;
-        const file = e.target.files[0];
-        e.target.value = "";
+    async function handleAttachFile(file: File) {
         const imageURL = await resizeFile(file, 1200, 1000, 80);
         dispatch({
-            type: REDUCER_ACTION_TYPE.TITLE_INPUT,
+            type: REDUCER_ACTION_TYPE.FILE_INPUT,
             payload: { ...state, filePreviewURL: imageURL },
         });
     }
@@ -112,7 +125,12 @@ export function useDashboard() {
         editor?.commands.setContent(content);
         dispatch({
             type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
-            payload: { title, filePreviewURL: image, selectedArticleId: id },
+            payload: {
+                ...state,
+                title,
+                filePreviewURL: image,
+                selectedArticleId: id,
+            },
         });
     }
 
@@ -148,14 +166,18 @@ export function useDashboard() {
         } else {
             writeNewArticle(state.title, state.filePreviewURL, html);
         }
+        console.log("Changes submitted 🌟");
+        handleCancelSelect();
     }
 
     return {
         articles,
         loading,
+        error,
         state,
+        REDUCER_ACTION_TYPE,
         editor,
-        handleTitleChange,
+        dispatch,
         handleAttachFile,
         handleSelectArticle,
         handleCancelSelect,
