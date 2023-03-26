@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { createContext, ReactElement, useContext, useReducer } from "react";
 import { ref } from "firebase/database";
 import { db } from "@/firebase/firebase";
 import { useListVals } from "react-firebase-hooks/database";
@@ -11,7 +11,7 @@ import {
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import { ArticleType } from "@/types";
+import { ArticleType, ChildrenType } from "@/types";
 
 type StateType = {
     selectedArticleId: string;
@@ -91,13 +91,12 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 articleIdToDelete: "",
             };
         }
-
         default:
             throw new Error("Unidentified reducer action type");
     }
 }
 
-export function useDashboard() {
+function useDashboardContext() {
     const [articles, loading, error] = useListVals<ArticleType>(
         ref(db, "articles")
     );
@@ -106,7 +105,7 @@ export function useDashboard() {
         extensions: [StarterKit, Link],
         content: "<p>Hello World! 🌎️</p>",
     });
-
+    console.log("hook's being used");
     async function handleAttachFile(file: File) {
         const imageURL = await resizeFile(file, 1200, 1000, 80);
         dispatch({
@@ -116,23 +115,37 @@ export function useDashboard() {
     }
 
     function handleSelectArticle(id: string) {
-        if (!id) return;
-        const article: ArticleType | undefined = articles?.find(
-            (a) => a.id === id
-        );
-        if (typeof article === "undefined")
-            throw new Error("That's not funny >:(");
-        const { title, image, content } = article;
-        editor?.commands.setContent(content);
-        dispatch({
-            type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
-            payload: {
-                ...state,
-                title,
-                filePreviewURL: image,
-                selectedArticleId: id,
-            },
-        });
+        console.log(id);
+        if (id === "fakeId") {
+            console.log("if block is executed");
+            editor?.commands.clearContent();
+            dispatch({
+                type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
+                payload: {
+                    ...state,
+                    title: "",
+                    filePreviewURL: "",
+                    selectedArticleId: id,
+                },
+            });
+        } else {
+            const article: ArticleType | undefined = articles?.find(
+                (a) => a.id === id
+            );
+            if (typeof article === "undefined")
+                throw new Error("That's not funny >:(");
+            const { title, image, content } = article;
+            editor?.commands.setContent(content);
+            dispatch({
+                type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
+                payload: {
+                    ...state,
+                    title,
+                    filePreviewURL: image,
+                    selectedArticleId: id,
+                },
+            });
+        }
     }
 
     function handleCancelSelect() {
@@ -150,7 +163,7 @@ export function useDashboard() {
     function handleSubmit() {
         const html: string | undefined = editor?.getHTML();
         if (!html || !state.title || !state.filePreviewURL) return;
-        if (state.selectedArticleId) {
+        if (state.selectedArticleId && state.selectedArticleId !== "fakeId") {
             const article: ArticleType | undefined = articles?.find(
                 (a) => a.id === state.selectedArticleId
             );
@@ -185,4 +198,38 @@ export function useDashboard() {
         handleDeleteArticle,
         handleSubmit,
     };
+}
+
+type UseDashboardContextType = ReturnType<typeof useDashboardContext>;
+
+const initContextState: UseDashboardContextType = {
+    articles: [],
+    loading: false,
+    error: undefined,
+    state: initState,
+    REDUCER_ACTION_TYPE,
+    editor: null,
+    dispatch: () => {},
+    handleAttachFile: async () => {},
+    handleSelectArticle: () => {},
+    handleCancelSelect: () => {},
+    handleDeleteArticle: () => {},
+    handleSubmit: () => {},
+};
+
+const DashboardContext =
+    createContext<UseDashboardContextType>(initContextState);
+
+export default function DashboardProvider({
+    children,
+}: ChildrenType): ReactElement {
+    return (
+        <DashboardContext.Provider value={useDashboardContext()}>
+            {children}
+        </DashboardContext.Provider>
+    );
+}
+
+export function useDashboard() {
+    return useContext(DashboardContext);
 }

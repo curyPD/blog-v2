@@ -8,20 +8,29 @@ export default function Header() {
     const [signOut, signOutLoading] = useSignOut(auth);
 
     return (
-        <header className="flex items-center justify-between p-3">
-            <div className="flex items-center gap-4">
-                <Link href="/">Home</Link>
+        <header>
+            <nav className="h-10 mx-auto max-w-screen-xl px-3 flex items-center gap-4">
+                <Link className="text-sm text-black font-bold mr-auto" href="/">
+                    Polyglot Dream
+                </Link>
                 {userData?.role.admin && (
-                    <Link href="/dashboard">Dashboard</Link>
+                    <Link className="text-xs text-black" href="/dashboard">
+                        Dashboard
+                    </Link>
                 )}
-            </div>
-            {userDataLoading || signOutLoading ? (
-                <div>Loading...</div>
-            ) : userData ? (
-                <button onClick={signOut}>Sign Out</button>
-            ) : (
-                <Link href="/login">Log In</Link>
-            )}
+
+                {userDataLoading || signOutLoading ? (
+                    <div className="text-xs text-neutral-400">Loading...</div>
+                ) : userData ? (
+                    <button className="text-xs text-black" onClick={signOut}>
+                        Sign Out
+                    </button>
+                ) : (
+                    <Link className="text-xs text-black" href="/login">
+                        Log In
+                    </Link>
+                )}
+            </nav>
         </header>
     );
 }

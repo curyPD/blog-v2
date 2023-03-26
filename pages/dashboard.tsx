@@ -1,31 +1,41 @@
 import { useRouter } from "next/router";
 import { useUserData } from "@/context/UserDataProvider";
-import { useDashboard } from "@/hooks/useDashboard";
-// import Tiptap from "@/components/TipTap";
-// import { ArticleType } from "@/types";
+import { useDashboard } from "@/context/DashboardProvider";
+
+import DashboardArticles from "@/components/DashboardArticles";
+import DashboardEditor from "@/components/DashboardEditor";
 
 export default function Dashboard() {
     const { userData, userDataLoading } = useUserData();
     const router = useRouter();
-    const { state, handleTitleChange } = useDashboard();
 
-    // if (userDataLoading) {
-    //     return <div>Loading...</div>;
-    // }
-    // if (!userData) {
-    //     typeof window !== "undefined" && router.push("/");
-    //     return <div>No users here</div>;
-    // }
+    const { state } = useDashboard();
+    if (userDataLoading) {
+        return <div>Loading...</div>;
+    }
+    if (!userData) {
+        typeof window !== "undefined" && router.push("/");
+        return <div>No users here</div>;
+    }
 
     return (
         <main>
-            <h1>Dashboard</h1>
-            <input
-                type="text"
-                className="border border-black"
-                value={state.title}
-                onChange={handleTitleChange}
-            />
+            <div className="flex">
+                <div
+                    className={`${
+                        state.selectedArticleId ? "hidden" : "block"
+                    } lg:block`}
+                >
+                    <DashboardArticles />
+                </div>
+                <div
+                    className={`${
+                        state.selectedArticleId ? "block" : "hidden"
+                    } lg:block`}
+                >
+                    <DashboardEditor />
+                </div>
+            </div>
         </main>
     );
 }

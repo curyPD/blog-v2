@@ -34,7 +34,7 @@ export default function TextEditor({ editor }: TextEditorProps) {
 
     return (
         <div>
-            <div className="flex gap-1 p-1">
+            <div className="flex gap-1 p-1 flex-wrap">
                 <button
                     className="p-0.5 border border-black rounded-sm"
                     onClick={() => editor?.chain().focus().toggleBold().run()}

@@ -22,13 +22,13 @@
             "uid": "s4ZBnly0OIyRphC0bieMt2nw5n4h",
             "name": "Aki Elarmote",
             "email": "kimome2340@oniecan.com",
-            "role": "subscriber"
+            "role": { "subscriber": true }
         },
         "UVDUB4SKZB3g366obz871MnSV1ZO": {
             "uid": "UVDUB4SKZB3g366obz871MnSV1ZO",
             "name": "Roman Druzhinin",
             "email": "romandruzhinin2003@gmail.com",
-            "role": "author"
+            "role": { "subscriber": true, "author": true }
         }
     }
 }
