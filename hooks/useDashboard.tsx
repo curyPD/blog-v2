@@ -10,6 +10,7 @@ import {
 } from "@/helpers";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 import { ArticleType } from "@/types";
 
 type StateType = {
@@ -102,7 +103,7 @@ export function useDashboard() {
     );
     const [state, dispatch] = useReducer(reducer, initState);
     const editor = useEditor({
-        extensions: [StarterKit],
+        extensions: [StarterKit, Link],
         content: "<p>Hello World! 🌎️</p>",
     });
 
