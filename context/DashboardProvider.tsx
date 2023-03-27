@@ -15,6 +15,7 @@ import { ArticleType, ChildrenType } from "@/types";
 
 type StateType = {
     selectedArticleId: string;
+    file: File | null;
     filePreviewURL: string;
     title: string;
     articleIdToDelete: string;
@@ -22,8 +23,9 @@ type StateType = {
 
 const initState: StateType = {
     selectedArticleId: "",
-    title: "",
+    file: null,
     filePreviewURL: "",
+    title: "",
     articleIdToDelete: "",
 };
 
@@ -51,7 +53,8 @@ function reducer(state: StateType, action: ReducerAction): StateType {
         case REDUCER_ACTION_TYPE.FILE_INPUT: {
             if (!action.payload)
                 throw new Error("action.payload missing in FILE_INPUT action");
-            return { ...state, filePreviewURL: action.payload.filePreviewURL };
+            const { filePreviewURL, file } = action.payload;
+            return { ...state, filePreviewURL, file };
         }
         case REDUCER_ACTION_TYPE.SELECT_ARTICLE: {
             if (!action.payload)
@@ -64,6 +67,7 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 selectedArticleId,
                 title,
                 filePreviewURL,
+                file: null,
             };
         }
         case REDUCER_ACTION_TYPE.CANCEL_SELECT: {
@@ -72,6 +76,7 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 selectedArticleId: "",
                 title: "",
                 filePreviewURL: "",
+                file: null,
             };
         }
         case REDUCER_ACTION_TYPE.STAGE_ARTICLE_DELETE: {
@@ -97,54 +102,95 @@ function reducer(state: StateType, action: ReducerAction): StateType {
 }
 
 function useDashboardContext() {
-    const [articles, loading, error] = useListVals<ArticleType>(
-        ref(db, "articles")
-    );
+    // const [articles, loading, error] = useListVals<ArticleType>(
+    //     ref(db, "articles")
+    // );
+    const articles = [
+        {
+            id: "one",
+            title: "How to learn a language",
+            created: "2023-03-17T07:09:27.152Z",
+            last_modified: "2023-03-17T07:10:01.063Z",
+            imageSm:
+                "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            imageMd:
+                "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            imageLg:
+                "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            content:
+                "<h2>Contents</h2><p></p><ol><li>Where to start</li><li>Where to finish</li></ol>",
+        },
+        {
+            id: "two",
+            title: "Best Japanese learning resources",
+            created: "2023-03-17T07:10:27.152Z",
+            last_modified: "2023-03-17T07:11:01.063Z",
+            imageSm:
+                "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            imageMd:
+                "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            imageLg:
+                "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            content: "<p>Welcome, I'm happy to see you here</p>",
+        },
+    ];
     const [state, dispatch] = useReducer(reducer, initState);
     const editor = useEditor({
         extensions: [StarterKit, Link],
         content: "<p>Hello World! 🌎️</p>",
     });
-    console.log("hook's being used");
+
     async function handleAttachFile(file: File) {
-        const imageURL = await resizeFile(file, 1200, 1000, 80);
-        dispatch({
-            type: REDUCER_ACTION_TYPE.FILE_INPUT,
-            payload: { ...state, filePreviewURL: imageURL },
-        });
+        try {
+            const imageURL = await resizeFile(file, 1200, 1000, 60);
+            dispatch({
+                type: REDUCER_ACTION_TYPE.FILE_INPUT,
+                payload: { ...state, filePreviewURL: imageURL, file },
+            });
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     function handleSelectArticle(id: string) {
-        console.log(id);
-        if (id === "fakeId") {
-            console.log("if block is executed");
-            editor?.commands.clearContent();
-            dispatch({
-                type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
-                payload: {
-                    ...state,
-                    title: "",
-                    filePreviewURL: "",
-                    selectedArticleId: id,
-                },
-            });
-        } else {
-            const article: ArticleType | undefined = articles?.find(
-                (a) => a.id === id
-            );
-            if (typeof article === "undefined")
-                throw new Error("That's not funny >:(");
-            const { title, image, content } = article;
-            editor?.commands.setContent(content);
-            dispatch({
-                type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
-                payload: {
-                    ...state,
-                    title,
-                    filePreviewURL: image,
-                    selectedArticleId: id,
-                },
-            });
+        try {
+            if (id === "fakeId") {
+                editor?.commands.clearContent();
+                dispatch({
+                    type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
+                    payload: {
+                        ...state,
+                        title: "",
+                        filePreviewURL: "",
+                        selectedArticleId: id,
+                    },
+                });
+            } else {
+                const article: ArticleType | undefined = articles?.find(
+                    (a) => a.id === id
+                );
+                if (typeof article === "undefined")
+                    throw new Error("That's not funny >:(");
+                const { title, imageMd, content } = article;
+                if (editor && !editor.isDestroyed) {
+                    editor.commands.setContent(content);
+                    dispatch({
+                        type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
+                        payload: {
+                            ...state,
+                            title,
+                            filePreviewURL: imageMd,
+                            selectedArticleId: id,
+                        },
+                    });
+                } else {
+                    throw new Error(
+                        "Couldn't set editor content, please try again"
+                    );
+                }
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -153,41 +199,49 @@ function useDashboardContext() {
         dispatch({ type: REDUCER_ACTION_TYPE.CANCEL_SELECT });
     }
 
-    function handleDeleteArticle(id: string) {
-        deleteArticle(id);
-        if (state.selectedArticleId === id) {
-            handleCancelSelect();
+    async function handleDeleteArticle(id: string) {
+        try {
+            await deleteArticle(id);
+            if (state.selectedArticleId === id) {
+                handleCancelSelect();
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
-    function handleSubmit() {
-        const html: string | undefined = editor?.getHTML();
-        if (!html || !state.title || !state.filePreviewURL) return;
-        if (state.selectedArticleId && state.selectedArticleId !== "fakeId") {
-            const article: ArticleType | undefined = articles?.find(
-                (a) => a.id === state.selectedArticleId
-            );
-            if (typeof article === "undefined")
-                throw new Error("That's not funny >:(");
-            const articleImageURL = article.image;
-            submitEditedArticle(
-                state.selectedArticleId,
-                state.title,
-                state.filePreviewURL,
-                articleImageURL,
-                html
-            );
-        } else {
-            writeNewArticle(state.title, state.filePreviewURL, html);
+    async function handleSubmit() {
+        try {
+            const html: string | undefined = editor?.getHTML();
+            if (!html || !state.title || !state.filePreviewURL) return;
+            if (
+                state.selectedArticleId &&
+                state.selectedArticleId !== "fakeId"
+            ) {
+                await submitEditedArticle(
+                    state.selectedArticleId,
+                    state.title,
+                    html,
+                    state.file
+                );
+            } else {
+                if (!state.file)
+                    throw new Error(
+                        "file should be present if there's a filePreviedURL"
+                    );
+                await writeNewArticle(state.title, state.file, html);
+            }
+            console.log("Changes submitted 🌟");
+            handleCancelSelect();
+        } catch (err) {
+            console.error(err);
         }
-        console.log("Changes submitted 🌟");
-        handleCancelSelect();
     }
 
     return {
         articles,
-        loading,
-        error,
+        // loading,
+        // error,
         state,
         REDUCER_ACTION_TYPE,
         editor,
@@ -204,8 +258,8 @@ type UseDashboardContextType = ReturnType<typeof useDashboardContext>;
 
 const initContextState: UseDashboardContextType = {
     articles: [],
-    loading: false,
-    error: undefined,
+    // loading: false,
+    // error: undefined,
     state: initState,
     REDUCER_ACTION_TYPE,
     editor: null,
@@ -213,8 +267,8 @@ const initContextState: UseDashboardContextType = {
     handleAttachFile: async () => {},
     handleSelectArticle: () => {},
     handleCancelSelect: () => {},
-    handleDeleteArticle: () => {},
-    handleSubmit: () => {},
+    handleDeleteArticle: async () => {},
+    handleSubmit: async () => {},
 };
 
 const DashboardContext =

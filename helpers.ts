@@ -36,25 +36,26 @@ export function resizeFile(
 
 export async function writeNewArticle(
     title: string,
-    filePreviewURL: string,
+    file: File,
     content: string
 ) {
     try {
         const newArticleKey: string = push(ref(db, `articles`)).key as string;
         const updates: Record<string, string> = {};
-        const imageRef = storageRef(storage, `images/${newArticleKey}/image`);
-        const snapshot = await uploadString(
-            imageRef,
-            filePreviewURL,
-            "data_url"
+
+        const [imageSmURL, imageMdURL, imageLgURL] = await getResizedImageURLs(
+            file,
+            newArticleKey
         );
-        const imageURL: string = await getDownloadURL(snapshot.ref);
+
         const dateISO = new Date().toISOString();
         updates[`/articles/${newArticleKey}/id`] = newArticleKey;
         updates[`/articles/${newArticleKey}/title`] = title;
         updates[`/articles/${newArticleKey}/created`] = dateISO;
         updates[`/articles/${newArticleKey}/last_modified`] = dateISO;
-        updates[`/articles/${newArticleKey}/image`] = imageURL;
+        updates[`/articles/${newArticleKey}/imageSm`] = imageSmURL;
+        updates[`/articles/${newArticleKey}/imageMd`] = imageMdURL;
+        updates[`/articles/${newArticleKey}/imageLg`] = imageLgURL;
         updates[`/articles/${newArticleKey}/content`] = content;
 
         update(ref(db), updates);
@@ -66,21 +67,17 @@ export async function writeNewArticle(
 export async function submitEditedArticle(
     id: string,
     title: string,
-    filePreviewURL: string,
-    prevImageURL: string,
-    content: string
+    content: string,
+    file: File | null
 ) {
     try {
         const updates: Record<string, string> = {};
-        if (prevImageURL !== filePreviewURL) {
-            const imageRef = storageRef(storage, `images/${id}/image`);
-            const snapshot = await uploadString(
-                imageRef,
-                filePreviewURL,
-                "data_url"
-            );
-            const imageURL: string = await getDownloadURL(snapshot.ref);
-            updates[`/articles/${id}/image`] = imageURL;
+        if (file) {
+            const [imageSmURL, imageMdURL, imageLgURL] =
+                await getResizedImageURLs(file, id);
+            updates[`/articles/${id}/imageSm`] = imageSmURL;
+            updates[`/articles/${id}/imageMd`] = imageMdURL;
+            updates[`/articles/${id}/imageLg`] = imageLgURL;
         }
         const dateISO = new Date().toISOString();
         updates[`/articles/${id}/title`] = title;
@@ -100,6 +97,55 @@ export async function deleteArticle(id: string) {
             remove(ref(db, `articles/${id}`)),
             deleteObject(imageRef),
         ]);
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function createResizedVersionsOfImage(file: File): Promise<string[]> {
+    try {
+        const [imageSm, imageMd, imageLg] = await Promise.all([
+            resizeFile(file, 70, 70, 60),
+            resizeFile(file, 800, 800, 80),
+            resizeFile(file, 1600, 1600, 80),
+        ]);
+        return [imageSm, imageMd, imageLg];
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function getResizedImageURLs(
+    file: File,
+    articleKey: string
+): Promise<string[]> {
+    try {
+        const [imageSm, imageMd, imageLg] = await createResizedVersionsOfImage(
+            file
+        );
+        const [snapshotSm, snapshotMd, snapshotLg] = await Promise.all([
+            uploadString(
+                storageRef(storage, `images/${articleKey}/sm`),
+                imageSm,
+                "data_url"
+            ),
+            uploadString(
+                storageRef(storage, `images/${articleKey}/md`),
+                imageMd,
+                "data_url"
+            ),
+            uploadString(
+                storageRef(storage, `images/${articleKey}/lg`),
+                imageLg,
+                "data_url"
+            ),
+        ]);
+        const imageURLs: string[] = await Promise.all([
+            getDownloadURL(snapshotSm.ref),
+            getDownloadURL(snapshotMd.ref),
+            getDownloadURL(snapshotLg.ref),
+        ]);
+        return imageURLs;
     } catch (err) {
         throw err;
     }

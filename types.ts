@@ -5,7 +5,9 @@ export type ArticleType = {
     title: string;
     created: string;
     last_modified: string;
-    image: string;
+    imageSm: string;
+    imageMd: string;
+    imageLg: string;
     content: string;
 };
 
