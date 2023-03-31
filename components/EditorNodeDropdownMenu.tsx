@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDashboard } from "@/context/DashboardProvider";
 import { HiOutlineChevronUpDown } from "react-icons/hi2";
+import useEditorMenuDropdownStyles from "@/hooks/useEditorMenuDropdownStyles";
 
 type NodeType =
     | "Normal"
@@ -15,9 +16,17 @@ export default function EditorNodeDropdownMenu() {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [selectedNode, setSelectedNode] = useState<NodeType>("Normal");
 
+    const dropdownToggleRef = useRef<HTMLDivElement>(null);
+
+    const dropdownStyles = useEditorMenuDropdownStyles(
+        dropdownToggleRef,
+        dropdownOpen
+    );
+
     const { editor } = useDashboard();
+
     return (
-        <div className="relative">
+        <div ref={dropdownToggleRef} className="relative">
             <button
                 onClick={() => setDropdownOpen((prevState) => !prevState)}
                 className="flex items-center gap-3 border-r border-zinc-400 py-1 pl-3 pr-1 text-sm font-semibold text-zinc-600"
@@ -26,7 +35,10 @@ export default function EditorNodeDropdownMenu() {
                 <HiOutlineChevronUpDown className="h-5 w-5 text-zinc-500" />
             </button>
             {dropdownOpen && (
-                <div className="absolute top-full z-10 flex max-h-56 w-52 -translate-y-1 translate-x-2 flex-col overflow-x-scroll rounded border border-zinc-300 bg-white p-1 shadow-lg">
+                <div
+                    className="absolute z-20 flex w-52 translate-x-2 flex-col overflow-x-scroll rounded border border-zinc-300 bg-white p-1 shadow-lg"
+                    style={dropdownStyles}
+                >
                     <button
                         className={`rounded-sm px-3 py-2 text-left text-sm font-normal ${
                             editor?.isActive("paragraph")
