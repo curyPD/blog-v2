@@ -136,6 +136,11 @@ function useDashboardContext() {
     ];
     const [state, dispatch] = useReducer(reducer, initState);
     const editor = useEditor({
+        editorProps: {
+            attributes: {
+                class: "px-3 pt-5 pb-12 border-t border-zinc-400 prose prose-zinc prose-sm prose-headings:font-bold",
+            },
+        },
         extensions: [StarterKit, Link],
         content: "<p>Hello World! 🌎️</p>",
     });
@@ -155,16 +160,22 @@ function useDashboardContext() {
     function handleSelectArticle(id: string) {
         try {
             if (id === "fakeId") {
-                editor?.commands.clearContent();
-                dispatch({
-                    type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
-                    payload: {
-                        ...state,
-                        title: "",
-                        filePreviewURL: "",
-                        selectedArticleId: id,
-                    },
-                });
+                if (editor && !editor.isDestroyed) {
+                    editor?.commands.clearContent();
+                    dispatch({
+                        type: REDUCER_ACTION_TYPE.SELECT_ARTICLE,
+                        payload: {
+                            ...state,
+                            title: "",
+                            filePreviewURL: "",
+                            selectedArticleId: id,
+                        },
+                    });
+                } else {
+                    throw new Error(
+                        "Couldn't set editor content, please try again"
+                    );
+                }
             } else {
                 const article: ArticleType | undefined = articles?.find(
                     (a) => a.id === id
