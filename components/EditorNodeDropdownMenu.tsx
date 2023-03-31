@@ -26,17 +26,20 @@ export default function EditorNodeDropdownMenu() {
     const { editor } = useDashboard();
 
     return (
-        <div ref={dropdownToggleRef} className="relative">
+        <div
+            ref={dropdownToggleRef}
+            className="relative border-r border-zinc-400 p-1"
+        >
             <button
                 onClick={() => setDropdownOpen((prevState) => !prevState)}
-                className="flex items-center gap-3 border-r border-zinc-400 py-1 pl-3 pr-1 text-sm font-semibold text-zinc-600"
+                className="flex items-center gap-3 rounded-sm py-1 pl-3 pr-1 text-sm font-semibold text-zinc-600"
             >
                 <span>{selectedNode}</span>
                 <HiOutlineChevronUpDown className="h-5 w-5 text-zinc-500" />
             </button>
             {dropdownOpen && (
                 <div
-                    className="absolute z-20 flex w-52 translate-x-2 flex-col overflow-x-scroll rounded border border-zinc-300 bg-white p-1 shadow-lg"
+                    className="absolute z-20 flex w-52 translate-x-2 flex-col gap-1 overflow-y-auto rounded border border-zinc-300 bg-white p-1 shadow-lg"
                     style={dropdownStyles}
                 >
                     <button
@@ -47,8 +50,8 @@ export default function EditorNodeDropdownMenu() {
                         }`}
                         onClick={() => {
                             setSelectedNode("Normal");
-
                             editor?.chain().focus().setParagraph().run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Normal
@@ -66,6 +69,7 @@ export default function EditorNodeDropdownMenu() {
                                 .focus()
                                 .toggleHeading({ level: 1 })
                                 .run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Heading 1
@@ -83,6 +87,7 @@ export default function EditorNodeDropdownMenu() {
                                 .focus()
                                 .toggleHeading({ level: 2 })
                                 .run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Heading 2
@@ -100,6 +105,7 @@ export default function EditorNodeDropdownMenu() {
                                 .focus()
                                 .toggleHeading({ level: 3 })
                                 .run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Heading 3
@@ -117,6 +123,7 @@ export default function EditorNodeDropdownMenu() {
                                 .focus()
                                 .toggleHeading({ level: 4 })
                                 .run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Heading 4
@@ -134,6 +141,7 @@ export default function EditorNodeDropdownMenu() {
                                 .focus()
                                 .toggleHeading({ level: 5 })
                                 .run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Heading 5
@@ -151,6 +159,7 @@ export default function EditorNodeDropdownMenu() {
                                 .focus()
                                 .toggleHeading({ level: 6 })
                                 .run();
+                            setDropdownOpen(false);
                         }}
                     >
                         Heading 6
