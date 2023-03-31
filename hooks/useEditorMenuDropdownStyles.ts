@@ -10,10 +10,8 @@ function useEditorMenuDropdownStyles(
     useEffect(() => {
         if (!ref.current || !dropdownOpen) return;
         const { height, top, bottom } = ref.current.getBoundingClientRect();
-        console.log(height, top, bottom);
         const dropdownToggleCoords: number = top + height / 2;
         const viewportCenter: number = window.innerHeight / 2;
-        console.log(dropdownToggleCoords, viewportCenter);
         if (dropdownToggleCoords > viewportCenter) {
             setDropdownStyles({
                 maxHeight: `${top}px`,
