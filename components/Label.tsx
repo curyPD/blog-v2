@@ -2,9 +2,15 @@ type LabelPropsType = {
     text: string;
     isLabelTag: boolean;
     htmlFor?: string;
+    onClick?: () => void;
 };
 
-export default function Label({ text, isLabelTag, htmlFor }: LabelPropsType) {
+export default function Label({
+    text,
+    isLabelTag,
+    htmlFor,
+    onClick,
+}: LabelPropsType) {
     if (isLabelTag)
         return (
             <label
@@ -16,7 +22,10 @@ export default function Label({ text, isLabelTag, htmlFor }: LabelPropsType) {
         );
     else
         return (
-            <div className="mb-2 text-xs font-semibold capitalize text-zinc-900">
+            <div
+                className="mb-2 text-xs font-semibold capitalize text-zinc-900"
+                onClick={() => onClick?.()}
+            >
                 {text}
             </div>
         );

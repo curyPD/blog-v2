@@ -3,13 +3,16 @@ import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { useUserData } from "@/context/UserDataProvider";
+import {
+    HiOutlineArrowLeftOnRectangle,
+    HiOutlineArrowRightOnRectangle,
+} from "react-icons/hi2";
 
 export default function Header() {
     const { userData, userDataLoading } = useUserData();
     const [signOut, signOutLoading] = useSignOut(auth);
 
     const router = useRouter();
-
     return (
         <header
             className={
@@ -17,14 +20,14 @@ export default function Header() {
             }
         >
             <nav
-                className={`h-12 px-4 flex items-center gap-4 ${
+                className={`flex h-12 items-center gap-4 px-4 ${
                     router.pathname === "/dashboard"
-                        ? "text-zinc-300"
+                        ? "text-zinc-200"
                         : "mx-auto max-w-screen-xl text-zinc-900"
                 }`}
             >
                 <Link
-                    className={`text-sm font-sans font-bold mr-auto`}
+                    className={`mr-auto font-sans text-sm font-bold`}
                     href="/"
                 >
                     Polyglot Dream
@@ -38,12 +41,17 @@ export default function Header() {
                 {userDataLoading || signOutLoading ? (
                     <div className="text-xs">Loading...</div>
                 ) : userData ? (
-                    <button className="text-xs" onClick={signOut}>
-                        Sign Out
+                    <button
+                        className="flex items-center gap-2"
+                        onClick={signOut}
+                    >
+                        <span className="text-xs">Sign Out</span>
+                        <HiOutlineArrowRightOnRectangle className="h-4 w-4" />
                     </button>
                 ) : (
-                    <Link className="text-xs" href="/login">
-                        Log In
+                    <Link className="flex items-center gap-2" href="/login">
+                        <span className="text-xs">Log In</span>
+                        <HiOutlineArrowLeftOnRectangle className="h-4 w-4" />
                     </Link>
                 )}
             </nav>

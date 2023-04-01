@@ -15,7 +15,7 @@ export default function FileInput() {
                 types={fileTypes}
                 hoverTitle="Drop image to upload"
             >
-                <div className="relative h-40 rounded-sm border border-zinc-400 bg-zinc-100 text-center text-sm text-zinc-900">
+                <div className="relative h-40 rounded-sm border border-zinc-400 bg-zinc-100 text-center text-sm text-zinc-900 lg:h-52">
                     {state.filePreviewURL ? (
                         <img
                             src={state.filePreviewURL}

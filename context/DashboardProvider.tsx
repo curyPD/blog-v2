@@ -249,6 +249,10 @@ function useDashboardContext() {
         }
     }
 
+    const lastModified: string | undefined = articles?.find(
+        (a) => a.id === state.selectedArticleId
+    )?.last_modified;
+
     return {
         articles,
         // loading,
@@ -256,6 +260,7 @@ function useDashboardContext() {
         state,
         REDUCER_ACTION_TYPE,
         editor,
+        lastModified,
         dispatch,
         handleAttachFile,
         handleSelectArticle,
@@ -274,6 +279,7 @@ const initContextState: UseDashboardContextType = {
     state: initState,
     REDUCER_ACTION_TYPE,
     editor: null,
+    lastModified: undefined,
     dispatch: () => {},
     handleAttachFile: async () => {},
     handleSelectArticle: () => {},
