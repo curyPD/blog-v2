@@ -17,7 +17,7 @@ export default function Dashboard() {
     }
 
     return (
-        <main className="h-[calc(100vh-48px)] overflow-hidden md:flex">
+        <main className="h-[calc(100vh-48px)] overflow-hidden md:flex lg:h-[calc(100vh-56px)]">
             <DashboardArticles />
             <DashboardEditor />
         </main>
