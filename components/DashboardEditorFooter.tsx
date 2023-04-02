@@ -43,10 +43,10 @@ export default function DashboardEditorFooter() {
                                 },
                             })
                         }
-                        className="group ml-auto flex items-center gap-2 rounded-sm border border-red-700 bg-transparent py-2 px-2 hover:border-red-600 hover:bg-red-600 min-[480px]:px-5 lg:gap-4 lg:px-9"
+                        className="group ml-auto flex items-center gap-2 rounded-sm border border-red-700 bg-transparent py-2 px-2 hover:border-red-600 hover:bg-red-600 xs:px-5 lg:gap-4 lg:px-9"
                     >
                         <HiOutlineTrash className="h-5 w-5 text-red-700 group-hover:text-white" />
-                        <span className="hidden text-sm text-red-700 group-hover:text-white min-[480px]:inline-block lg:text-base">
+                        <span className="hidden text-sm text-red-700 group-hover:text-white xs:inline-block lg:text-base">
                             Delete
                         </span>
                     </button>

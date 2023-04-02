@@ -9,7 +9,7 @@ export default function DashboardArticles() {
         <section
             className={`h-full ${
                 state.selectedArticleId ? "hidden" : "block"
-            } overflow-y-auto min-[480px]:w-80 min-[480px]:border-r min-[480px]:border-zinc-300 md:block lg:w-96`}
+            } overflow-y-auto xs:w-80 xs:border-r xs:border-zinc-300 md:block lg:w-96`}
         >
             <DashboardArticlesHeader />
             <div className="p-2">

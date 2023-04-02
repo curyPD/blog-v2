@@ -1,4 +1,4 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -9,9 +9,16 @@ module.exports = {
         "./context/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
+        screens: {
+            xs: "480px",
+            ...defaultTheme.screens,
+        },
         extend: {
             fontFamily: {
-                sans: ["var(--font-open-sans)", ...fontFamily.sans],
+                sans: [
+                    "var(--font-open-sans)",
+                    ...defaultTheme.fontFamily.sans,
+                ],
             },
         },
     },
