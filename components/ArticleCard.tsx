@@ -48,7 +48,7 @@ export default function ArticleCard({
                 </h2>
                 <p
                     dangerouslySetInnerHTML={{ __html: firstParagraph }}
-                    className="text-sm leading-normal text-zinc-700 line-clamp-3 lg:text-base lg:leading-relaxed"
+                    className="text-sm leading-relaxed text-zinc-700 line-clamp-3 lg:text-base lg:leading-loose"
                 ></p>
             </Link>
         </article>
