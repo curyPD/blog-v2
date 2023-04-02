@@ -142,7 +142,7 @@ function useDashboardContext() {
             },
         },
         extensions: [StarterKit, Link],
-        content: "<p>Hello World! 🌎️</p>",
+        // content: "<p>Hello World! 🌎️</p>",
     });
 
     async function handleAttachFile(file: File) {
