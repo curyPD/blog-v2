@@ -46,10 +46,10 @@ export default function ArticleCard({
                 <h2 className="mb-3 text-lg font-bold text-zinc-900 lg:text-xl">
                     {title}
                 </h2>
-                <p
+                <div
                     dangerouslySetInnerHTML={{ __html: firstParagraph }}
                     className="text-sm leading-relaxed text-zinc-700 line-clamp-3 lg:text-base lg:leading-loose"
-                ></p>
+                ></div>
             </Link>
         </article>
     );
