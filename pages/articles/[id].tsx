@@ -1,22 +1,45 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 
+import Footer from "@/components/Footer";
+
 // import { db } from "@/firebase/firebase";
 // import { get, ref } from "firebase/database";
 import data from "../../dummy-data/data.json";
 import { ArticleType } from "../../types";
 
 export default function Article({ article }: { article: ArticleType }) {
-    const createdDate: string = new Date(
-        Date.parse(article.created)
-    ).toLocaleDateString("en-US");
+    const createdDate = new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }).format(new Date(article.created));
 
     return (
-        <main>
-            <h1>{article.title}</h1>
-            <span>{createdDate}</span>
-            <img src={article.image} alt="" />
-            <article dangerouslySetInnerHTML={{ __html: article.content }} />
-        </main>
+        <>
+            <main className="pt-14 pb-24">
+                <div className="container mx-auto px-4 xs:px-6 lg:max-w-screen-lg xl:px-0">
+                    <h1 className="mb-14 text-center text-5xl font-extrabold tracking-tighter text-zinc-900 md:text-left lg:text-7xl">
+                        {article.title}
+                    </h1>
+                    <time
+                        dateTime={article.created}
+                        className="mb-1 block text-sm text-zinc-400 lg:text-base"
+                    >
+                        {createdDate}
+                    </time>
+                    <img
+                        src={article.imageLg}
+                        alt=""
+                        className="mb-10 md:mb-14 lg:mb-16"
+                    />
+                    <article
+                        dangerouslySetInnerHTML={{ __html: article.content }}
+                        className="prose prose-sm prose-zinc mx-auto md:prose-base lg:prose-lg"
+                    />
+                </div>
+            </main>
+            <Footer />
+        </>
     );
 }
 
