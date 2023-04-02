@@ -6,7 +6,7 @@ export default function DashboardArticlesHeader() {
 
     return (
         <header className="sticky top-0 border-b border-zinc-300 bg-white">
-            <div className="flex h-11 items-center justify-between px-4 lg:h-14">
+            <div className="flex h-11 items-center justify-between pl-4 pr-2 lg:h-14 lg:pl-5 lg:pr-2">
                 <h2 className="text-sm font-semibold text-zinc-900 lg:text-base">
                     Articles
                 </h2>
