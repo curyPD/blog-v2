@@ -13,7 +13,7 @@ export default function DashboardEditor() {
         <section
             className={`relative h-full flex-1 ${
                 state.selectedArticleId ? "block" : "hidden"
-            } ${state.articleIdToDelete ? "" : "overflow-y-auto"} md:block`}
+            } ${state.articleIdToDelete ? "" : "overflow-y-auto"}`}
         >
             {state.articleIdToDelete && <ArticleDeleteModal />}
             <DashboardEditorHeader />
