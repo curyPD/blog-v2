@@ -72,6 +72,7 @@ export default function Login() {
                             name="password"
                             value={input.password}
                             onChange={handleChange}
+                            autoComplete="current-password"
                         />
                     </div>
 

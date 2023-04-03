@@ -96,12 +96,17 @@ export default function Signup() {
                         />
                         <input
                             required
-                            className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                            className={`block w-full rounded-sm border px-3 py-1.5 text-sm lg:text-base ${
+                                passwordsMatch
+                                    ? "border-zinc-400 text-zinc-900"
+                                    : "border-red-500 text-red-600"
+                            }`}
                             type="password"
                             id="password"
                             name="password"
                             value={input.password}
                             onChange={handleChange}
+                            autoComplete="new-password"
                         />
                     </div>
                     <div>
@@ -112,22 +117,27 @@ export default function Signup() {
                         />
                         <input
                             required
-                            className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                            className={`block w-full rounded-sm border px-3 py-1.5 text-sm lg:text-base ${
+                                passwordsMatch
+                                    ? "border-zinc-400 text-zinc-900"
+                                    : "border-red-500 text-red-600"
+                            }`}
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
                             value={input.confirmPassword}
                             onChange={handleChange}
+                            autoComplete="new-password"
                         />
+                        {!passwordsMatch && (
+                            <p className="text-xs font-medium text-red-600">
+                                Error: Passwords do not match
+                            </p>
+                        )}
                     </div>
                     {error && (
                         <div className="text-center text-xs font-medium text-red-500 lg:text-sm">
                             Error: {error.message}
-                        </div>
-                    )}
-                    {!passwordsMatch && (
-                        <div className="text-center text-xs font-medium text-red-500 lg:text-sm">
-                            Error: Passwords do not match
                         </div>
                     )}
                     <FormSubmitButton text="Sign up" />
