@@ -19,6 +19,10 @@ type StateType = {
     filePreviewURL: string;
     title: string;
     articleIdToDelete: string;
+    errorMessage: string;
+    successMessage: string;
+    errorMessageInProp: boolean;
+    successMessageInProp: boolean;
 };
 
 const initState: StateType = {
@@ -27,6 +31,10 @@ const initState: StateType = {
     filePreviewURL: "",
     title: "",
     articleIdToDelete: "",
+    errorMessage: "",
+    successMessage: "",
+    errorMessageInProp: false,
+    successMessageInProp: false,
 };
 
 enum REDUCER_ACTION_TYPE {
@@ -36,6 +44,10 @@ enum REDUCER_ACTION_TYPE {
     CANCEL_SELECT,
     STAGE_ARTICLE_DELETE,
     CANCEL_ARTICLE_DELETE,
+    SHOW_ERROR_MESSAGE,
+    SHOW_SUCCESS_MESSAGE,
+    HIDE_SUCCESS_MESSAGE,
+    HIDE_ERROR_MESSAGE,
 }
 
 type ReducerAction = {
@@ -96,6 +108,44 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 articleIdToDelete: "",
             };
         }
+        case REDUCER_ACTION_TYPE.SHOW_ERROR_MESSAGE: {
+            if (!action.payload)
+                throw new Error(
+                    "action.payload missing in SHOW_ERROR_MESSAGE action"
+                );
+            const { errorMessage } = action.payload;
+
+            return {
+                ...state,
+                errorMessage,
+                errorMessageInProp: true,
+            };
+        }
+        case REDUCER_ACTION_TYPE.SHOW_SUCCESS_MESSAGE: {
+            if (!action.payload)
+                throw new Error(
+                    "action.payload missing in SHOW_SUCCESS_MESSAGE action"
+                );
+            const { successMessage } = action.payload;
+
+            return {
+                ...state,
+                successMessage,
+                successMessageInProp: true,
+            };
+        }
+        case REDUCER_ACTION_TYPE.HIDE_ERROR_MESSAGE: {
+            return {
+                ...state,
+                errorMessageInProp: false,
+            };
+        }
+        case REDUCER_ACTION_TYPE.HIDE_SUCCESS_MESSAGE: {
+            return {
+                ...state,
+                successMessageInProp: false,
+            };
+        }
         default:
             throw new Error("Unidentified reducer action type");
     }
@@ -142,8 +192,26 @@ function useDashboardContext() {
             },
         },
         extensions: [StarterKit, Link],
-        // content: "<p>Hello World! 🌎️</p>",
     });
+
+    function showErrorMessage(error: unknown) {
+        console.error(error);
+        let errorMessage: string;
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        } else if (typeof error === "string") {
+            errorMessage = error;
+        } else {
+            errorMessage = "Something went wrong😢";
+        }
+        dispatch({
+            type: REDUCER_ACTION_TYPE.SHOW_ERROR_MESSAGE,
+            payload: {
+                ...state,
+                errorMessage,
+            },
+        });
+    }
 
     async function handleAttachFile(file: File) {
         try {
@@ -153,7 +221,7 @@ function useDashboardContext() {
                 payload: { ...state, filePreviewURL: imageURL, file },
             });
         } catch (err) {
-            console.error(err);
+            showErrorMessage(err);
         }
     }
 
@@ -201,7 +269,7 @@ function useDashboardContext() {
                 }
             }
         } catch (err) {
-            console.error(err);
+            showErrorMessage(err);
         }
     }
 
@@ -216,36 +284,50 @@ function useDashboardContext() {
             if (state.selectedArticleId === id) {
                 handleCancelSelect();
             }
+            dispatch({
+                type: REDUCER_ACTION_TYPE.SHOW_SUCCESS_MESSAGE,
+                payload: {
+                    ...state,
+                    successMessage: "Article has been deleted",
+                },
+            });
         } catch (err) {
-            console.error(err);
+            showErrorMessage(err);
         }
     }
 
     async function handleSubmit() {
         try {
-            const html: string | undefined = editor?.getHTML();
-            if (!html || !state.title || !state.filePreviewURL) return;
-            if (
-                state.selectedArticleId &&
-                state.selectedArticleId !== "fakeId"
-            ) {
-                await submitEditedArticle(
-                    state.selectedArticleId,
-                    state.title,
-                    html,
-                    state.file
-                );
-            } else {
-                if (!state.file)
-                    throw new Error(
-                        "file should be present if there's a filePreviedURL"
-                    );
-                await writeNewArticle(state.title, state.file, html);
-            }
-            console.log("Changes submitted 🌟");
-            handleCancelSelect();
+            throw new Error("You are not allowed to submit");
+            // const html: string | undefined = editor?.getHTML();
+            // if (!html || !state.title || !state.filePreviewURL) return;
+            // if (
+            //     state.selectedArticleId &&
+            //     state.selectedArticleId !== "fakeId"
+            // ) {
+            //     await submitEditedArticle(
+            //         state.selectedArticleId,
+            //         state.title,
+            //         html,
+            //         state.file
+            //     );
+            // } else {
+            //     if (!state.file)
+            //         throw new Error(
+            //             "file should be present if there's a filePreviedURL"
+            //         );
+            //     await writeNewArticle(state.title, state.file, html);
+            // }
+            // handleCancelSelect();
+            // dispatch({
+            //     type: REDUCER_ACTION_TYPE.SET_SUCCESS_MESSAGE,
+            //     payload: {
+            //         ...state,
+            //         successMessage: "Changes have been submitted",
+            //     },
+            // });
         } catch (err) {
-            console.error(err);
+            showErrorMessage(err);
         }
     }
 
