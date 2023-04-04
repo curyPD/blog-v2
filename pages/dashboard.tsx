@@ -42,7 +42,7 @@ export default function Dashboard() {
                         dispatch({
                             type: REDUCER_ACTION_TYPE.HIDE_SUCCESS_MESSAGE,
                         });
-                    }, 4000);
+                    }, 3000);
                 }}
             />
             <main className="h-[calc(100vh-48px)] overflow-hidden md:flex lg:h-[calc(100vh-56px)]">

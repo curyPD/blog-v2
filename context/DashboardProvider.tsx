@@ -298,34 +298,33 @@ function useDashboardContext() {
 
     async function handleSubmit() {
         try {
-            throw new Error("You are not allowed to submit");
-            // const html: string | undefined = editor?.getHTML();
-            // if (!html || !state.title || !state.filePreviewURL) return;
-            // if (
-            //     state.selectedArticleId &&
-            //     state.selectedArticleId !== "fakeId"
-            // ) {
-            //     await submitEditedArticle(
-            //         state.selectedArticleId,
-            //         state.title,
-            //         html,
-            //         state.file
-            //     );
-            // } else {
-            //     if (!state.file)
-            //         throw new Error(
-            //             "file should be present if there's a filePreviedURL"
-            //         );
-            //     await writeNewArticle(state.title, state.file, html);
-            // }
-            // handleCancelSelect();
-            // dispatch({
-            //     type: REDUCER_ACTION_TYPE.SET_SUCCESS_MESSAGE,
-            //     payload: {
-            //         ...state,
-            //         successMessage: "Changes have been submitted",
-            //     },
-            // });
+            const html: string | undefined = editor?.getHTML();
+            if (!html || !state.title || !state.filePreviewURL) return;
+            if (
+                state.selectedArticleId &&
+                state.selectedArticleId !== "fakeId"
+            ) {
+                await submitEditedArticle(
+                    state.selectedArticleId,
+                    state.title,
+                    html,
+                    state.file
+                );
+            } else {
+                if (!state.file)
+                    throw new Error(
+                        "file should be present if there's a filePreviedURL"
+                    );
+                await writeNewArticle(state.title, state.file, html);
+            }
+            handleCancelSelect();
+            dispatch({
+                type: REDUCER_ACTION_TYPE.SHOW_SUCCESS_MESSAGE,
+                payload: {
+                    ...state,
+                    successMessage: "Changes have been submitted",
+                },
+            });
         } catch (err) {
             showErrorMessage(err);
         }
