@@ -10,7 +10,6 @@ import {
 import useControlledForm from "@/hooks/useControlledForm";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import FormGridContainer from "@/components/FormGridContainer";
-import useErrorMessage from "@/hooks/useErrorMessage";
 import Message from "@/components/Message";
 
 type StateType = {
@@ -29,14 +28,13 @@ export default function Signup() {
     });
 
     const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
+    const [inProp, setInProp] = useState<boolean>(false);
 
     const [createUserWithEmailAndPassword, , loading, error] =
         useCreateUserWithEmailAndPassword(auth);
     const [updateProfile] = useUpdateProfile(auth);
 
     const router = useRouter();
-
-    const { errorMessageShown, errorMessage } = useErrorMessage(error);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
@@ -49,7 +47,10 @@ export default function Signup() {
             input.email,
             input.password
         );
-        if (error) console.error(error);
+        if (error) {
+            console.error(error);
+            setInProp(true);
+        }
         if (credential) {
             await updateProfile({
                 displayName: input.name,
@@ -60,9 +61,17 @@ export default function Signup() {
 
     return (
         <>
-            {errorMessageShown && (
-                <Message isError={true} text={errorMessage} />
-            )}
+            <Message
+                isError={true}
+                text={error?.message ?? "No errors on my watch 😎🚬"}
+                inProp={inProp}
+                onEntered={() => {
+                    setTimeout(() => {
+                        setInProp(false);
+                    }, 7000);
+                }}
+            />
+
             <main className="flex h-[calc(100vh-48px)] items-center justify-center lg:h-[calc(100vh-57px)]">
                 <div className="w-5/6 max-w-sm rounded border border-zinc-300 bg-white px-3 py-4 xs:px-6">
                     <h1 className="mb-5 text-sm font-semibold text-zinc-900 lg:text-base">
@@ -151,11 +160,6 @@ export default function Signup() {
                                 </p>
                             )}
                         </div>
-                        {errorMessageShown && (
-                            <div className="text-center text-xs font-medium text-red-500 lg:text-sm">
-                                Error: {errorMessage}
-                            </div>
-                        )}
                         <FormSubmitButton text="Sign up" />
                     </FormGridContainer>
                     <p className="mt-6 text-center text-xs text-zinc-500 lg:text-sm">

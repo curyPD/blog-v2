@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
@@ -7,7 +7,6 @@ import useControlledForm from "@/hooks/useControlledForm";
 import Label from "@/components/Label";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import FormGridContainer from "@/components/FormGridContainer";
-import useErrorMessage from "@/hooks/useErrorMessage";
 import Message from "@/components/Message";
 type StateType = {
     email: string;
@@ -19,12 +18,12 @@ export default function Login() {
         email: "",
         password: "",
     });
+    const [inProp, setInProp] = useState<boolean>(false);
 
     const [signInWithEmailAndPassword, , loading, error] =
         useSignInWithEmailAndPassword(auth);
 
     const router = useRouter();
-    const { errorMessageShown, errorMessage } = useErrorMessage(error);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
@@ -32,7 +31,10 @@ export default function Login() {
             input.email,
             input.password
         );
-        if (error) console.error(error);
+        if (error) {
+            console.error(error);
+            setInProp(true);
+        }
         if (credential) {
             router.push("/");
         }
@@ -40,9 +42,16 @@ export default function Login() {
 
     return (
         <>
-            {errorMessageShown && (
-                <Message isError={true} text={errorMessage} />
-            )}
+            <Message
+                isError={true}
+                text={error?.message ?? "No errors on my watch 😎🚬"}
+                inProp={inProp}
+                onEntered={() => {
+                    setTimeout(() => {
+                        setInProp(false);
+                    }, 7000);
+                }}
+            />
             <main className="flex h-[calc(100vh-48px)] items-center justify-center lg:h-[calc(100vh-57px)]">
                 <div className="w-5/6 max-w-sm rounded border border-zinc-300 bg-white px-3 py-4 xs:px-6">
                     <h1 className="mb-5 text-sm font-semibold text-zinc-900 lg:text-base">
@@ -86,11 +95,6 @@ export default function Login() {
                             />
                         </div>
 
-                        {error && (
-                            <div className="text-center text-xs font-medium text-red-500 lg:text-sm">
-                                Error: {error.message}
-                            </div>
-                        )}
                         <FormSubmitButton text="Log in" />
                     </FormGridContainer>
 
