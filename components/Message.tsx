@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef } from "react";
+import { useRef } from "react";
 import { Transition } from "react-transition-group";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 
@@ -6,7 +6,7 @@ type MessagePropsType = {
     isError: boolean;
     text: string;
     inProp: boolean;
-    setInProp: Dispatch<SetStateAction<boolean>>;
+    onEntered: () => void;
 };
 
 const transitionStyles = {
@@ -21,7 +21,7 @@ export default function Message({
     isError,
     text,
     inProp,
-    setInProp,
+    onEntered,
 }: MessagePropsType) {
     const nodeRef = useRef(null);
     if (isError)
@@ -32,11 +32,7 @@ export default function Message({
                 unmountOnExit={true}
                 in={inProp}
                 timeout={1500}
-                onEntered={() => {
-                    setTimeout(() => {
-                        setInProp(false);
-                    }, 7000);
-                }}
+                onEntered={onEntered}
             >
                 {(state) => (
                     <div
