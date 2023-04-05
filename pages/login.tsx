@@ -69,7 +69,7 @@ export default function Login() {
                             />
                             <input
                                 required
-                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                                 type="email"
                                 id="email"
                                 name="email"
@@ -85,7 +85,7 @@ export default function Login() {
                             />
                             <input
                                 required
-                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                                 type="password"
                                 id="password"
                                 name="password"
@@ -101,7 +101,7 @@ export default function Login() {
                     <p className="mt-6 text-center text-xs text-zinc-500 lg:text-sm">
                         Don't have an account yet?{" "}
                         <Link
-                            className="text-zinc-900 hover:underline"
+                            className="text-zinc-900 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                             href="/signup"
                         >
                             Sign Up

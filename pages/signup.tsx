@@ -89,7 +89,7 @@ export default function Signup() {
                             />
                             <input
                                 required
-                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                                 type="text"
                                 id="name"
                                 name="name"
@@ -105,7 +105,7 @@ export default function Signup() {
                             />
                             <input
                                 required
-                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                                 type="email"
                                 id="email"
                                 name="email"
@@ -121,7 +121,7 @@ export default function Signup() {
                             />
                             <input
                                 required
-                                className={`block w-full rounded-sm border px-3 py-1.5 text-sm lg:text-base ${
+                                className={`block w-full rounded-sm border px-3 py-1.5 text-sm focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base ${
                                     passwordsMatch
                                         ? "border-zinc-400 text-zinc-900"
                                         : "border-red-500 text-red-600"
@@ -142,7 +142,7 @@ export default function Signup() {
                             />
                             <input
                                 required
-                                className={`block w-full rounded-sm border px-3 py-1.5 text-sm lg:text-base ${
+                                className={`block w-full rounded-sm border px-3 py-1.5 text-sm focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base ${
                                     passwordsMatch
                                         ? "border-zinc-400 text-zinc-900"
                                         : "border-red-500 text-red-600"
@@ -165,7 +165,7 @@ export default function Signup() {
                     <p className="mt-6 text-center text-xs text-zinc-500 lg:text-sm">
                         Already have an account?{" "}
                         <Link
-                            className="text-zinc-900 hover:underline"
+                            className="text-zinc-900 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                             href="/login"
                         >
                             Log In
