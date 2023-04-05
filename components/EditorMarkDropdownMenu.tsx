@@ -47,6 +47,8 @@ export default function EditorMarkDropdownMenu() {
             <button
                 onClick={() => setDropdownOpen((prevState) => !prevState)}
                 className="flex h-full w-7 items-center justify-center rounded-sm hover:bg-zinc-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:w-8"
+                aria-label="Show menu"
+                title="Show menu"
             >
                 <HiOutlineEllipsisVertical className="h-6 w-6 text-zinc-600" />
             </button>
