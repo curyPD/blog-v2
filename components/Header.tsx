@@ -3,10 +3,6 @@ import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { useUserData } from "@/context/UserDataProvider";
-// import {
-//     HiOutlineArrowLeftOnRectangle,
-//     HiOutlineArrowRightOnRectangle,
-// } from "react-icons/hi2";
 
 export default function Header() {
     const { userData, userDataLoading } = useUserData();
@@ -29,13 +25,16 @@ export default function Header() {
                 }`}
             >
                 <Link
-                    className={`mr-auto font-sans text-sm font-extrabold tracking-tight lg:text-base`}
+                    className={`mr-auto font-sans text-sm font-extrabold tracking-tight focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base`}
                     href="/"
                 >
                     Polyglot Dream
                 </Link>
                 {userData?.role.admin && (
-                    <Link className="text-xs lg:text-sm" href="/dashboard">
+                    <Link
+                        className="text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-sm"
+                        href="/dashboard"
+                    >
                         Dashboard
                     </Link>
                 )}
@@ -44,16 +43,17 @@ export default function Header() {
                     <div className="text-xs lg:text-sm">Loading...</div>
                 ) : userData ? (
                     <button
-                        className="flex items-center gap-2"
+                        className="text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-sm"
                         onClick={signOut}
                     >
-                        <span className="text-xs lg:text-sm">Sign Out</span>
-                        {/* <HiOutlineArrowRightOnRectangle className="h-4 w-4" /> */}
+                        Sign Out
                     </button>
                 ) : (
-                    <Link className="flex items-center gap-2" href="/login">
-                        <span className="text-xs lg:text-sm">Log In</span>
-                        {/* <HiOutlineArrowLeftOnRectangle className="h-4 w-4" /> */}
+                    <Link
+                        className="text-xs focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-sm"
+                        href="/login"
+                    >
+                        Log In
                     </Link>
                 )}
             </nav>
