@@ -12,7 +12,7 @@ export default function DashboardArticlesHeader() {
                 </h2>
                 <button
                     onClick={() => handleSelectArticle("fakeId")}
-                    className="group flex h-9 w-9 items-center justify-center rounded-sm hover:bg-zinc-100"
+                    className="group flex h-9 w-9 items-center justify-center rounded-sm hover:bg-zinc-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900"
                 >
                     <HiOutlinePencilSquare className="h-5 w-5 text-zinc-500 group-hover:text-zinc-700" />
                 </button>

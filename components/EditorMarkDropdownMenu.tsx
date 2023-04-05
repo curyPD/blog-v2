@@ -46,7 +46,7 @@ export default function EditorMarkDropdownMenu() {
         <div ref={dropdownToggleRef} className="relative p-1">
             <button
                 onClick={() => setDropdownOpen((prevState) => !prevState)}
-                className="flex h-full w-7 items-center justify-center rounded-sm hover:bg-zinc-200 lg:w-8"
+                className="flex h-full w-7 items-center justify-center rounded-sm hover:bg-zinc-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:w-8"
             >
                 <HiOutlineEllipsisVertical className="h-6 w-6 text-zinc-600" />
             </button>
@@ -56,7 +56,7 @@ export default function EditorMarkDropdownMenu() {
                     style={dropdownStyles}
                 >
                     <button
-                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("bold")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -72,7 +72,7 @@ export default function EditorMarkDropdownMenu() {
                         <span className="">Strong</span>
                     </button>
                     <button
-                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("italic")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -88,7 +88,7 @@ export default function EditorMarkDropdownMenu() {
                         <span className="">Emphasis</span>
                     </button>
                     <button
-                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("strike")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -104,7 +104,7 @@ export default function EditorMarkDropdownMenu() {
                         <span>Strike</span>
                     </button>
                     <button
-                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("bulletList")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -118,7 +118,7 @@ export default function EditorMarkDropdownMenu() {
                         <span>Bullet</span>
                     </button>
                     <button
-                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("orderedList")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -132,7 +132,7 @@ export default function EditorMarkDropdownMenu() {
                         <span>Numbered</span>
                     </button>
                     <button
-                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("link")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"

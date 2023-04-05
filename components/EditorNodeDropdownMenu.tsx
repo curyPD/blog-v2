@@ -32,7 +32,7 @@ export default function EditorNodeDropdownMenu() {
         >
             <button
                 onClick={() => setDropdownOpen((prevState) => !prevState)}
-                className="flex items-center gap-3 rounded-sm py-1 pl-3 pr-1 text-sm font-semibold text-zinc-600 hover:bg-zinc-200 lg:gap-4 lg:text-base"
+                className="flex items-center gap-3 rounded-sm py-1 pl-3 pr-1 text-sm font-semibold text-zinc-600 hover:bg-zinc-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:gap-4 lg:text-base"
             >
                 <span>{selectedNode}</span>
                 <HiOutlineChevronUpDown className="h-5 w-5 text-zinc-500 lg:h-6 lg:w-6" />
@@ -43,7 +43,7 @@ export default function EditorNodeDropdownMenu() {
                     style={dropdownStyles}
                 >
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("paragraph")
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -57,7 +57,7 @@ export default function EditorNodeDropdownMenu() {
                         Normal
                     </button>
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-3xl font-bold hover:bg-blue-600 hover:text-white lg:text-4xl ${
+                        className={`rounded-sm px-3 py-2 text-left text-3xl font-bold hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-4xl ${
                             editor?.isActive("heading", { level: 1 })
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -75,7 +75,7 @@ export default function EditorNodeDropdownMenu() {
                         Heading 1
                     </button>
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-2xl font-bold hover:bg-blue-600 hover:text-white lg:text-3xl ${
+                        className={`rounded-sm px-3 py-2 text-left text-2xl font-bold hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-3xl ${
                             editor?.isActive("heading", { level: 2 })
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -93,7 +93,7 @@ export default function EditorNodeDropdownMenu() {
                         Heading 2
                     </button>
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-xl font-bold hover:bg-blue-600 hover:text-white lg:text-2xl ${
+                        className={`rounded-sm px-3 py-2 text-left text-xl font-bold hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-2xl ${
                             editor?.isActive("heading", { level: 3 })
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -111,7 +111,7 @@ export default function EditorNodeDropdownMenu() {
                         Heading 3
                     </button>
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-lg font-bold hover:bg-blue-600 hover:text-white lg:text-xl ${
+                        className={`rounded-sm px-3 py-2 text-left text-lg font-bold hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-xl ${
                             editor?.isActive("heading", { level: 4 })
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -129,7 +129,7 @@ export default function EditorNodeDropdownMenu() {
                         Heading 4
                     </button>
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-base font-bold hover:bg-blue-600 hover:text-white lg:text-lg ${
+                        className={`rounded-sm px-3 py-2 text-left text-base font-bold hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-lg ${
                             editor?.isActive("heading", { level: 5 })
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
@@ -147,7 +147,7 @@ export default function EditorNodeDropdownMenu() {
                         Heading 5
                     </button>
                     <button
-                        className={`rounded-sm px-3 py-2 text-left text-sm font-bold hover:bg-blue-600 hover:text-white lg:text-base ${
+                        className={`rounded-sm px-3 py-2 text-left text-sm font-bold hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
                             editor?.isActive("heading", { level: 6 })
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"

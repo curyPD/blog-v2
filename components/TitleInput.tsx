@@ -10,7 +10,7 @@ export default function TitleInput() {
             <input
                 id="titleInput"
                 type="text"
-                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 lg:text-base"
+                className="block w-full rounded-sm border border-zinc-400 px-3 py-1.5 text-sm text-zinc-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                 value={state.title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     dispatch({

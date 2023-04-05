@@ -24,7 +24,7 @@ export default function DashboardEditorFooter() {
             )}
             <button
                 onClick={handleSubmit}
-                className="flex items-center gap-2 rounded-sm border bg-green-500 py-2 px-5 hover:bg-green-600 lg:gap-4 lg:px-9"
+                className="flex items-center gap-2 rounded-sm border bg-green-500 py-2 px-5 hover:bg-green-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:gap-4 lg:px-9"
             >
                 <HiOutlineArrowUpTray className="h-5 w-5 text-green-100" />
                 <span className="text-sm font-semibold text-white lg:text-base">
@@ -43,7 +43,7 @@ export default function DashboardEditorFooter() {
                                 },
                             })
                         }
-                        className="group ml-auto flex items-center gap-2 rounded-sm border border-red-700 bg-transparent py-2 px-2 hover:border-red-600 hover:bg-red-600 xs:px-5 lg:gap-4 lg:px-9"
+                        className="group ml-auto flex items-center gap-2 rounded-sm border border-red-700 bg-transparent py-2 px-2 hover:border-red-600 hover:bg-red-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 xs:px-5 lg:gap-4 lg:px-9"
                     >
                         <HiOutlineTrash className="h-5 w-5 text-red-700 group-hover:text-white" />
                         <span className="hidden text-sm text-red-700 group-hover:text-white xs:inline-block lg:text-base">

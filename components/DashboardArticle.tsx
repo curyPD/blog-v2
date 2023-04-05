@@ -20,9 +20,10 @@ export default function DashboardArticle({
     return (
         <article
             onClick={() => handleSelectArticle(id)}
-            className={`mb-1 flex cursor-pointer items-center gap-3 rounded px-2 py-3 last:mb-0 ${
-                isSelected ? "bg-blue-600" : "bg-white hover:bg-zinc-200"
+            className={`mb-1 flex cursor-pointer items-center gap-3 rounded px-2 py-3 last:mb-0 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 ${
+                isSelected ? "bg-blue-600" : "bg-white hover:bg-zinc-100"
             }`}
+            tabIndex={0}
         >
             <img src={imageSm} className="h-9 w-14 object-cover" alt="" />
             <p
