@@ -15,7 +15,11 @@ export default function DashboardEditorFooter() {
     return (
         <div className="sticky bottom-0 z-10 flex items-center gap-6 border-t border-zinc-300 bg-white py-2 px-4">
             {lastModifiedDate && (
-                <div className="flex items-center gap-2 text-green-800">
+                <div
+                    aria-label={`Last published ${lastModifiedDate}`}
+                    title={`Last published ${lastModifiedDate}`}
+                    className="-ml-2 flex cursor-default items-center gap-2 rounded-sm p-3 text-green-800 hover:bg-green-100 hover:text-green-900"
+                >
                     <HiOutlineArrowUpTray className="h-4 w-4" />
                     <span className="text-xs font-semibold">
                         {lastModifiedDate}

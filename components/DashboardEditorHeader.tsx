@@ -10,6 +10,8 @@ export default function DashboardEditorHeader() {
                 <button
                     onClick={handleCancelSelect}
                     className="group flex h-9 w-9 items-center justify-center rounded-sm hover:bg-zinc-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:order-last"
+                    aria-label="Close pane group"
+                    title="Close pane group"
                 >
                     <HiOutlineArrowLeft className="h-4 w-4 text-zinc-500 group-hover:text-zinc-700 lg:hidden" />
                     <HiOutlineXMark className="hidden h-5 w-5 text-zinc-600 group-hover:text-zinc-700 lg:block" />
