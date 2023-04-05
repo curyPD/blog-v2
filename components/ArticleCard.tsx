@@ -27,14 +27,17 @@ export default function ArticleCard({
 
     return (
         <article>
-            <Link href={`/articles/${id}`}>
+            <Link
+                href={`/articles/${id}`}
+                className="block transition-transform duration-300 hover:-translate-y-3 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-8"
+            >
                 <div>
                     <img
                         src={imageMd}
                         alt={`${title} thumbnail`}
                         width={800}
                         height={800}
-                        className="mb-4 transition-all duration-200 hover:scale-[1.025] hover:shadow-xl"
+                        className="mb-4"
                     />
                 </div>
                 <time
