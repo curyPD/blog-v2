@@ -171,7 +171,7 @@ function useDashboardContext() {
     const editor = useEditor({
         editorProps: {
             attributes: {
-                class: "px-3 pt-5 pb-12 border-t max-w-none border-zinc-400 prose prose-zinc prose-sm focus:outline-none lg:prose-base prose-headings:font-bold",
+                class: "px-3 pt-5 pb-12 max-w-none prose prose-zinc prose-sm focus:outline-none lg:prose-base prose-headings:font-bold",
             },
         },
         extensions: [StarterKit, Link],
