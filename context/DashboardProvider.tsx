@@ -198,7 +198,7 @@ function useDashboardContext() {
 
     async function handleAttachFile(file: File) {
         try {
-            const imageURL = await resizeFile(file, 1200, 1000, 60);
+            const imageURL = await resizeFile(file, 1200, 418, 60);
             dispatch({
                 type: REDUCER_ACTION_TYPE.FILE_INPUT,
                 payload: { ...state, filePreviewURL: imageURL, file },

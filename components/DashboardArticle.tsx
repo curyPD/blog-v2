@@ -25,7 +25,11 @@ export default function DashboardArticle({
             }`}
             tabIndex={0}
         >
-            <img src={imageSm} className="h-9 w-14 object-cover" alt="" />
+            <img
+                src={imageSm}
+                className="h-9 w-14 shrink-0 object-cover"
+                alt=""
+            />
             <p
                 className={`truncate text-sm lg:text-base ${
                     isSelected ? "text-white" : "text-zinc-800"
