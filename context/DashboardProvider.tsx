@@ -1,4 +1,10 @@
-import { createContext, ReactElement, useContext, useReducer } from "react";
+import {
+    createContext,
+    ReactElement,
+    useContext,
+    useReducer,
+    useEffect,
+} from "react";
 import { ref } from "firebase/database";
 import { db } from "@/firebase/firebase";
 import { useListVals } from "react-firebase-hooks/database";
@@ -152,39 +158,16 @@ function reducer(state: StateType, action: ReducerAction): StateType {
 }
 
 function useDashboardContext() {
-    // const [articles, loading, error] = useListVals<ArticleType>(
-    //     ref(db, "articles")
-    // );
-    const articles = [
-        {
-            id: "one",
-            title: "How to learn a language",
-            created: "2023-03-17T07:09:27.152Z",
-            last_modified: "2023-03-17T07:10:01.063Z",
-            imageSm:
-                "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            imageMd:
-                "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            imageLg:
-                "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            content:
-                "<h2>Contents</h2><p></p><ol><li>Where to start</li><li>Where to finish</li></ol>",
-        },
-        {
-            id: "two",
-            title: "Best Japanese learning resources",
-            created: "2023-03-17T07:10:27.152Z",
-            last_modified: "2023-03-17T07:11:01.063Z",
-            imageSm:
-                "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            imageMd:
-                "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            imageLg:
-                "https://images.unsplash.com/photo-1546638008-efbe0b62c730?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            content: "<p>Welcome, I'm happy to see you here</p>",
-        },
-    ];
+    const [articles, loading, error] = useListVals<ArticleType>(
+        ref(db, "articles")
+    );
     const [state, dispatch] = useReducer(reducer, initState);
+
+    useEffect(() => {
+        if (typeof error === "undefined") return;
+        showErrorMessage(error);
+    }, [error]);
+
     const editor = useEditor({
         editorProps: {
             attributes: {
@@ -336,8 +319,8 @@ function useDashboardContext() {
 
     return {
         articles,
-        // loading,
-        // error,
+        loading,
+        error,
         state,
         REDUCER_ACTION_TYPE,
         editor,
@@ -355,8 +338,8 @@ type UseDashboardContextType = ReturnType<typeof useDashboardContext>;
 
 const initContextState: UseDashboardContextType = {
     articles: [],
-    // loading: false,
-    // error: undefined,
+    loading: false,
+    error: undefined,
     state: initState,
     REDUCER_ACTION_TYPE,
     editor: null,
