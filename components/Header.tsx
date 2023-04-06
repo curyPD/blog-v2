@@ -27,8 +27,8 @@ export default function Header() {
                 <Link
                     className={`mr-auto font-sans text-sm font-extrabold tracking-tight focus:outline-none focus-visible:ring-1 ${
                         router.pathname === "/dashboard"
-                            ? "hover:text-white focus-visible:ring-white focus-visible:ring-offset-zinc-900"
-                            : "hover:text-zinc-600 focus-visible:ring-zinc-900 focus-visible:ring-offset-white"
+                            ? "focus-visible:ring-white focus-visible:ring-offset-zinc-900"
+                            : "focus-visible:ring-zinc-900 focus-visible:ring-offset-white"
                     } focus-visible:ring-offset-2 lg:text-base`}
                     href="/"
                 >
