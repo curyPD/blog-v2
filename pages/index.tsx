@@ -55,7 +55,7 @@ export default function Home({ articles }: { articles: ArticleType[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async function () {
-    const articlesRef = ref(db, "posts");
+    const articlesRef = ref(db, "article");
     const articlesSnapshot = await get(articlesRef);
     if (!articlesSnapshot.exists()) {
         return {
