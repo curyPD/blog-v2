@@ -72,7 +72,7 @@ export default function Signup() {
                 }}
             />
 
-            <main className="flex h-[calc(100vh-48px)] items-center justify-center lg:h-[calc(100vh-57px)]">
+            <main className="flex h-[calc(100vh-49px)] items-center justify-center lg:h-[calc(100vh-57px)]">
                 <div className="w-5/6 max-w-sm rounded border border-zinc-300 bg-white px-3 py-4 xs:px-6">
                     <h1 className="mb-5 text-sm font-semibold text-zinc-900 lg:text-base">
                         Sign up
