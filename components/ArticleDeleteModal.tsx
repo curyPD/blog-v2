@@ -30,7 +30,7 @@ export default function ArticleDeleteModal() {
                                 type: REDUCER_ACTION_TYPE.CANCEL_ARTICLE_DELETE,
                             })
                         }
-                        className="group flex h-9 w-9 items-center justify-center rounded-sm hover:bg-zinc-100"
+                        className="group group flex h-9 w-9 items-center justify-center rounded-sm hover:bg-zinc-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900"
                     >
                         <HiOutlineXMark className="h-5 w-5 text-zinc-600 lg:h-6 lg:w-6" />
                     </button>
@@ -46,7 +46,7 @@ export default function ArticleDeleteModal() {
                                 type: REDUCER_ACTION_TYPE.CANCEL_ARTICLE_DELETE,
                             })
                         }
-                        className="flex-1 rounded-sm border border-zinc-300 py-1 text-sm font-semibold text-zinc-500 hover:bg-zinc-600 hover:text-white lg:text-base"
+                        className="flex-1 rounded-sm border border-zinc-300 py-1 text-sm font-semibold text-zinc-500 hover:bg-zinc-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                     >
                         Cancel
                     </button>
@@ -54,7 +54,7 @@ export default function ArticleDeleteModal() {
                         onClick={() =>
                             handleDeleteArticle(state.articleIdToDelete)
                         }
-                        className="flex-1 rounded-sm bg-red-600 py-1 text-sm font-semibold text-white hover:bg-red-700 lg:text-base"
+                        className="flex-1 rounded-sm bg-red-600 py-1 text-sm font-semibold text-white hover:bg-red-700 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:text-base"
                     >
                         Delete now
                     </button>

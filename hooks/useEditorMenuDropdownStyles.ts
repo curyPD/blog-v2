@@ -14,7 +14,7 @@ function useEditorMenuDropdownStyles(
         const viewportCenter: number = window.innerHeight / 2;
         if (dropdownToggleCoords > viewportCenter) {
             setDropdownStyles({
-                maxHeight: `${top}px`,
+                maxHeight: `${top - 56}px`,
                 bottom: "100%",
                 transform: `translateY(4px)`,
             });

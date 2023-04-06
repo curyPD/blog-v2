@@ -25,7 +25,6 @@ export default function TextEditor() {
                 <div
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
-                    className="h-64 overflow-y-scroll lg:h-96"
                 >
                     <EditorContent editor={editor} />
                 </div>

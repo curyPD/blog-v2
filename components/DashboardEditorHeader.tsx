@@ -17,7 +17,7 @@ export default function DashboardEditorHeader() {
                     <HiOutlineXMark className="hidden h-5 w-5 text-zinc-600 group-hover:text-zinc-700 lg:block" />
                 </button>
                 <h2
-                    className={`text-sm font-semibold lg:text-base ${
+                    className={`truncate text-sm font-semibold lg:text-base ${
                         state.title ? "text-zinc-900" : "text-zinc-500"
                     }`}
                 >
