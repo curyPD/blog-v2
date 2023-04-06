@@ -12,11 +12,19 @@ export default function Dashboard() {
     const { state, REDUCER_ACTION_TYPE, dispatch } = useDashboard();
 
     if (userDataLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="py-6 text-sm text-zinc-900 lg:text-base">
+                Loading...
+            </div>
+        );
     }
     if (!userData) {
         typeof window !== "undefined" && router.push("/");
-        return <div>No users here</div>;
+        return (
+            <div className="py-6 text-sm text-zinc-900 lg:text-base">
+                No users here
+            </div>
+        );
     }
 
     return (

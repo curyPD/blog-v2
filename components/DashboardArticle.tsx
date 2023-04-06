@@ -34,7 +34,7 @@ export default function DashboardArticle({
                 {title}
             </p>
             <HiOutlineChevronRight
-                className={`ml-auto h-4 w-4 lg:h-5 lg:w-5 ${
+                className={`ml-auto h-4 w-4 shrink-0 lg:h-5 lg:w-5 ${
                     isSelected ? "text-zinc-200" : "text-zinc-400"
                 }`}
             />
