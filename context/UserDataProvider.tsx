@@ -9,6 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/firebase";
 import { get, ref, set } from "firebase/database";
 import { UserDataType, ChildrenType } from "../types";
+import { User } from "firebase/auth";
 
 function useUserDataContext() {
     const [userData, setUserData] = useState<UserDataType | null>(null);
@@ -19,21 +20,26 @@ function useUserDataContext() {
             setUserData(null);
             return;
         }
+
         async function getUserData() {
             setUserDataLoading(true);
-            const userRef = ref(db, `users/${user?.uid}`);
+            const userRef = ref(db, `users/${(user as User).uid}`);
             const snapshot = await get(userRef);
             if (!snapshot.exists()) {
                 await set(userRef, {
-                    uid: user?.uid,
-                    name: user?.displayName,
-                    email: user?.email,
+                    uid: (user as User).uid,
+                    name: (user as User).displayName,
+                    email: (user as User).email,
                     role: {
                         subscriber: true,
                     },
                 });
+                const newSnapshot = await get(userRef);
+                const value: UserDataType = newSnapshot.val();
+                setUserData(value);
+            } else {
+                setUserData(snapshot.val());
             }
-            setUserData(snapshot.val());
             setUserDataLoading(false);
         }
         getUserData();
