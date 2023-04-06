@@ -15,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <UserDataProvider>
             <DashboardProvider>
-                <div className={`${openSans.variable} font-sans`}>
+                <div
+                    className={`${openSans.variable} flex min-h-screen flex-col font-sans`}
+                >
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>
