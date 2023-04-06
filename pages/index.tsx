@@ -4,9 +4,8 @@ import { GetStaticProps } from "next";
 import ArticleCard from "@/components/ArticleCard";
 import Footer from "@/components/Footer";
 
-// import { db } from "@/firebase/firebase";
-// import { get, ref, child } from "firebase/database";
-import data from "../dummy-data/data.json";
+import { db } from "@/firebase/firebase";
+import { get, ref } from "firebase/database";
 
 import { ArticleType } from "@/types";
 
@@ -44,7 +43,9 @@ export default function Home({ articles }: { articles: ArticleType[] }) {
                             ))}
                         </div>
                     ) : (
-                        <div>Nothing here...</div>
+                        <div className="text-sm text-zinc-900 lg:text-base">
+                            Nothing here...
+                        </div>
                     )}
                 </div>
             </main>
@@ -54,27 +55,22 @@ export default function Home({ articles }: { articles: ArticleType[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async function () {
-    // const dbRef = ref(db);
-    // const articlesRef = ref(db, "articles");
-    // const articlesSnapshot = await get(child(dbRef, "articles"));
-    // if (!articlesSnapshot.exists()) {
-    //     return {
-    //         props: {
-    //             articles: [],
-    //         },
-    //     };
-    // } else {
-    //     const values = articlesSnapshot.val();
-    //     return {
-    //         props: {
-    //             articles: values,
-    //         },
-    //     };
-    // }
-    const articles: ArticleType[] = Object.values(data.articles);
-    return {
-        props: {
-            articles,
-        },
-    };
+    const articlesRef = ref(db, "posts");
+    const articlesSnapshot = await get(articlesRef);
+    if (!articlesSnapshot.exists()) {
+        return {
+            props: {
+                articles: [] as ArticleType[],
+            },
+        };
+    } else {
+        const values: Record<ArticleType["id"], ArticleType> =
+            articlesSnapshot.val();
+        const articles = Object.values(values);
+        return {
+            props: {
+                articles,
+            },
+        };
+    }
 };

@@ -2,8 +2,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 
 import Footer from "@/components/Footer";
 
-// import { db } from "@/firebase/firebase";
-// import { get, ref } from "firebase/database";
+import { db } from "@/firebase/firebase";
+import { get, ref } from "firebase/database";
 import data from "../../dummy-data/data.json";
 import { ArticleType } from "../../types";
 
@@ -44,53 +44,33 @@ export default function Article({ article }: { article: ArticleType }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async function () {
-    // const articlesRef = ref(db, "articles");
-    // const articlesSnapshot = await get(articlesRef);
-    // if (!articlesSnapshot.exists()) {
-    //     return {
-    //         paths: [],
-    //         fallback: false,
-    //     };
-    // } else {
-    //     return {
-    //         paths: Object.keys(articlesSnapshot.val()).map((key) => ({
-    //             params: { id: key },
-    //         })),
-    //         fallback: false,
-    //     };
-    // }
-    const paths = Object.keys(data.articles).map((key) => {
+    const articlesRef = ref(db, "articles");
+    const articlesSnapshot = await get(articlesRef);
+    if (!articlesSnapshot.exists()) {
         return {
+            paths: [],
+            fallback: false,
+        };
+    } else {
+        const values: Record<ArticleType["id"], ArticleType> =
+            articlesSnapshot.val();
+        const keys = Object.keys(values);
+        const paths = keys.map((key) => ({
             params: {
                 id: key,
             },
+        }));
+        return {
+            paths,
+            fallback: false,
         };
-    });
-    return {
-        paths,
-        fallback: false,
-    };
+    }
 };
 
 export const getStaticProps: GetStaticProps = async function ({ params }) {
-    // if (typeof params === "undefined") {
-    //     return {
-    //         props: {
-    //             article: undefined,
-    //         },
-    //     };
-    // } else {
-    //     const articleRef = ref(db, `articles/${params.id}`);
-    //     const articleSnapshot = await get(articleRef);
-    //     return {
-    //         props: {
-    //             article: articleSnapshot.val(),
-    //         },
-    //     };
-    // }
-    const article: ArticleType = Object.values(data.articles).find(
-        (article) => article.id === params?.id
-    )!;
+    const articleRef = ref(db, `articles/${params?.id}`);
+    const articleSnapshot = await get(articleRef);
+    const article: ArticleType = articleSnapshot.val();
     return {
         props: {
             article,
