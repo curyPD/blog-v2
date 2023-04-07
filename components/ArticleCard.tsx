@@ -32,12 +32,13 @@ export default function ArticleCard({
                 className="block transition-transform duration-300 hover:-translate-y-3 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-8"
             >
                 <div>
-                    <img
+                    <Image
                         src={imageMd}
                         alt={`${title} thumbnail`}
-                        width={800}
-                        height={800}
+                        width={616}
+                        height={404}
                         className="mb-4"
+                        priority
                     />
                 </div>
                 <time

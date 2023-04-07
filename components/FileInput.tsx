@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FileUploader } from "react-drag-drop-files";
 import { useDashboard } from "@/context/DashboardProvider";
 import Label from "./Label";
@@ -18,10 +19,13 @@ export default function FileInput() {
                 >
                     <div className="relative h-40 rounded-sm border border-zinc-400 bg-zinc-100 text-center text-sm text-zinc-900 lg:h-52">
                         {state.filePreviewURL ? (
-                            <img
+                            <Image
                                 src={state.filePreviewURL}
-                                alt=""
-                                className="mx-auto max-h-full"
+                                alt="Preview of uploaded image"
+                                className="mx-auto max-h-full w-auto object-contain"
+                                fill
+                                sizes="(max-width: 672px) 100vw,
+                                        672px"
                             />
                         ) : (
                             <div className="absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3">

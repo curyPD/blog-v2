@@ -1,10 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import Image from "next/image";
 
 import Footer from "@/components/Footer";
 
 import { db } from "@/firebase/firebase";
 import { get, ref } from "firebase/database";
-import data from "../../dummy-data/data.json";
 import { ArticleType } from "../../types";
 
 export default function Article({ article }: { article: ArticleType }) {
@@ -27,10 +27,13 @@ export default function Article({ article }: { article: ArticleType }) {
                     >
                         {createdDate}
                     </time>
-                    <img
+                    <Image
                         src={article.imageLg}
-                        alt=""
+                        alt={`Banner for the ${article.title} article`}
+                        width={1024}
+                        height={672}
                         className="mb-10 md:mb-14 lg:mb-16"
+                        priority
                     />
                     <article
                         dangerouslySetInnerHTML={{ __html: article.content }}

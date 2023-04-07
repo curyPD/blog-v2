@@ -8,7 +8,7 @@ import DashboardProvider from "@/context/DashboardProvider";
 const openSans = Open_Sans({
     subsets: ["latin"],
     variable: "--font-open-sans",
-    display: "swap",
+    // display: "swap",
 });
 
 export default function App({ Component, pageProps }: AppProps) {

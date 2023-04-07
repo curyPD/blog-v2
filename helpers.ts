@@ -106,7 +106,7 @@ async function createResizedVersionsOfImage(file: File): Promise<string[]> {
     try {
         const [imageSm, imageMd, imageLg] = await Promise.all([
             resizeFile(file, 112, 72, 60),
-            resizeFile(file, 1232, 810, 80, 616, 405),
+            resizeFile(file, 1232, 808, 80, 616, 404),
             resizeFile(file, 2048, 1344, 80, 1024, 672),
         ]);
         return [imageSm, imageMd, imageLg];

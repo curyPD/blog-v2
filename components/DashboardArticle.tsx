@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArticleType } from "@/types";
 import { useDashboard } from "@/context/DashboardProvider";
 import { HiOutlineChevronRight } from "react-icons/hi2";
@@ -25,10 +26,12 @@ export default function DashboardArticle({
             }`}
             tabIndex={0}
         >
-            <img
+            <Image
                 src={imageSm}
+                alt={title}
+                width={56}
+                height={36}
                 className="h-9 w-14 shrink-0 object-cover"
-                alt=""
             />
             <p
                 className={`truncate text-sm lg:text-base ${
