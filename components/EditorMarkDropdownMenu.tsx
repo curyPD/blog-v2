@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useDashboard } from "@/context/DashboardProvider";
 import useEditorMenuDropdownStyles from "@/hooks/useEditorMenuDropdownStyles";
 import { HiOutlineEllipsisVertical, HiOutlineLink } from "react-icons/hi2";
@@ -9,7 +9,11 @@ export default function EditorMarkDropdownMenu() {
 
     const dropdownToggleRef = useRef<HTMLDivElement>(null);
 
-    const { editor } = useDashboard();
+    const { editor, state } = useDashboard();
+
+    useEffect(() => {
+        setDropdownOpen(false);
+    }, [state.selectedArticleId]);
 
     const setLink = useCallback(() => {
         if (!editor) return;

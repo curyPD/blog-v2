@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDashboard } from "@/context/DashboardProvider";
 import { HiOutlineChevronUpDown } from "react-icons/hi2";
 import useEditorMenuDropdownStyles from "@/hooks/useEditorMenuDropdownStyles";
@@ -23,7 +23,11 @@ export default function EditorNodeDropdownMenu() {
         dropdownOpen
     );
 
-    const { editor } = useDashboard();
+    const { editor, state } = useDashboard();
+
+    useEffect(() => {
+        setDropdownOpen(false);
+    }, [state.selectedArticleId]);
 
     return (
         <div
