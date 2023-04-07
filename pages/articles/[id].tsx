@@ -18,7 +18,7 @@ export default function Article({ article }: { article: ArticleType }) {
         <>
             <main className="pt-14 pb-24">
                 <div className="container mx-auto px-4 xs:px-6 lg:max-w-screen-lg xl:px-0">
-                    <h1 className="mb-14 text-center text-5xl font-extrabold tracking-tighter text-zinc-900 md:text-left lg:text-7xl">
+                    <h1 className="mb-8 text-3xl font-extrabold tracking-tighter text-zinc-900 md:mb-10 md:text-left md:text-4xl lg:text-6xl lg:leading-[1.1]">
                         {article.title}
                     </h1>
                     <time
