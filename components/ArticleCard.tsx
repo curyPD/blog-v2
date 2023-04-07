@@ -29,7 +29,7 @@ export default function ArticleCard({
         <article>
             <Link
                 href={`/articles/${id}`}
-                className="block transition-transform duration-300 hover:-translate-y-3 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-8"
+                className="block transition-transform duration-200 hover:-translate-y-3 focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-8"
             >
                 <div>
                     <Image
@@ -47,12 +47,12 @@ export default function ArticleCard({
                 >
                     {createdDate}
                 </time>
-                <h2 className="mb-3 text-lg font-bold text-zinc-900 lg:text-xl">
+                <h2 className="mb-3 text-lg font-bold leading-snug text-zinc-900 lg:text-xl">
                     {title}
                 </h2>
                 <div
                     dangerouslySetInnerHTML={{ __html: firstParagraph }}
-                    className="text-sm leading-relaxed text-zinc-700 line-clamp-3 lg:text-base lg:leading-loose"
+                    className="text-sm leading-relaxed text-zinc-700 line-clamp-3 lg:text-base lg:leading-relaxed"
                 ></div>
             </Link>
         </article>

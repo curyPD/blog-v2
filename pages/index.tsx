@@ -21,12 +21,13 @@ export default function Home({ articles }: { articles: ArticleType[] }) {
             </Head>
             <main className="pt-14 pb-24">
                 <div className="container mx-auto px-4 xs:px-6 lg:px-9 xl:max-w-screen-xl 2xl:px-0">
-                    <div className="mb-14 flex flex-col items-center gap-6 md:flex-row md:justify-between">
-                        <h1 className="text-center text-5xl font-extrabold tracking-tighter text-zinc-900 lg:text-7xl">
-                            Polyglot Dream
+                    <div className="mb-16 lg:mb-24">
+                        <h1 className="mb-7 text-4xl font-extrabold tracking-tight text-zinc-900 lg:mb-12 lg:text-7xl lg:leading-[1.1]">
+                            Hop on, it's time to learn a foreign language.
                         </h1>
-                        <p className="text-center text-base text-zinc-600 lg:text-lg">
-                            A blog about language learning.
+                        <p className="text-lg text-zinc-600 lg:text-2xl">
+                            Hi, my name is Roman. Here I share what I know about
+                            language learning. Twice a year, maybe?
                         </p>
                     </div>
                     {articles.length ? (

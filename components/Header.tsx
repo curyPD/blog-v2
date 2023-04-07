@@ -25,7 +25,7 @@ export default function Header() {
                 }`}
             >
                 <Link
-                    className={`mr-auto font-sans text-sm font-extrabold tracking-tight focus:outline-none focus-visible:ring-1 ${
+                    className={`mr-auto text-sm font-extrabold focus:outline-none focus-visible:ring-1 ${
                         router.pathname === "/dashboard"
                             ? "focus-visible:ring-white focus-visible:ring-offset-zinc-900"
                             : "focus-visible:ring-zinc-900 focus-visible:ring-offset-white"
