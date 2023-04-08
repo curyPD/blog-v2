@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useDashboard } from "@/context/DashboardProvider";
 import useEditorMenuDropdownStyles from "@/hooks/useEditorMenuDropdownStyles";
-import { HiOutlineEllipsisVertical, HiOutlineLink } from "react-icons/hi2";
+import {
+    HiOutlineEllipsisVertical,
+    HiOutlineLink,
+    HiOutlineArrowTopRightOnSquare,
+} from "react-icons/hi2";
 import { AiOutlineOrderedList, AiOutlineUnorderedList } from "react-icons/ai";
 
 export default function EditorMarkDropdownMenu() {
@@ -15,30 +19,67 @@ export default function EditorMarkDropdownMenu() {
         setDropdownOpen(false);
     }, [state.selectedArticleId]);
 
-    const setLink = useCallback(() => {
+    const setLink = useCallback(
+        (type: "external" | "anchor") => {
+            if (!editor) return;
+            const previousUrl: string = editor.getAttributes("link").href;
+            const url: string | null = window.prompt("URL", previousUrl);
+
+            // cancelled
+            if (url === null) {
+                return;
+            }
+
+            // empty
+            if (url === "") {
+                editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .unsetLink()
+                    .run();
+
+                return;
+            }
+
+            // update link
+            if (type === "external")
+                editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .setLink({ href: url })
+                    .updateAttributes("link", {
+                        target: "_blank",
+                    })
+                    .run();
+            else
+                editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .setLink({ href: url })
+                    .updateAttributes("link", {
+                        target: "_self",
+                    })
+                    .run();
+        },
+        [editor]
+    );
+
+    const setHash = useCallback(() => {
         if (!editor) return;
-        const previousUrl: string = editor.getAttributes("link").href;
-        const url: string | null = window.prompt("URL", previousUrl);
+        const previousHash: string = editor.getAttributes("heading").id;
+
+        const hash: string | null = window.prompt("Hash", previousHash);
 
         // cancelled
-        if (url === null) {
+        if (hash === null) {
             return;
         }
 
-        // empty
-        if (url === "") {
-            editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
-            return;
-        }
-
-        // update link
-        editor
-            .chain()
-            .focus()
-            .extendMarkRange("link")
-            .setLink({ href: url })
-            .run();
+        // update heading id
+        editor.chain().focus().updateAttributes("heading", { id: hash }).run();
     }, [editor]);
 
     const dropdownStyles = useEditorMenuDropdownStyles(
@@ -139,23 +180,77 @@ export default function EditorMarkDropdownMenu() {
                     </button>
                     <button
                         className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
-                            editor?.isActive("link")
+                            editor?.getAttributes("heading").id
                                 ? "bg-blue-100 text-blue-500"
                                 : "bg-white text-zinc-600"
                         }`}
                         onClick={
-                            editor?.isActive("link")
+                            editor?.getAttributes("heading").id
+                                ? () => {
+                                      editor
+                                          .chain()
+                                          .focus()
+                                          .updateAttributes("heading", {
+                                              id: "",
+                                          })
+                                          .run();
+                                      setDropdownOpen(false);
+                                  }
+                                : () => {
+                                      setHash();
+                                      setDropdownOpen(false);
+                                  }
+                        }
+                    >
+                        <span className="basis-4 text-center font-bold lg:basis-5">
+                            #
+                        </span>
+                        <span className="">Hash</span>
+                    </button>
+                    <button
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
+                            editor?.isActive("link") &&
+                            editor.getAttributes("link").target !== "_blank"
+                                ? "bg-blue-100 text-blue-500"
+                                : "bg-white text-zinc-600"
+                        }`}
+                        onClick={
+                            editor?.isActive("link") &&
+                            editor.getAttributes("link").target !== "_blank"
                                 ? () => {
                                       editor?.chain().focus().unsetLink().run();
                                       setDropdownOpen(false);
                                   }
                                 : () => {
-                                      setLink();
+                                      setLink("anchor");
                                       setDropdownOpen(false);
                                   }
                         }
                     >
                         <HiOutlineLink className="h-4 w-4 shrink-0 lg:h-5 lg:w-5" />
+                        <span>Anchor</span>
+                    </button>
+                    <button
+                        className={`flex items-center gap-3 rounded-sm px-3 py-2 text-left text-sm font-normal hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 lg:text-base ${
+                            editor?.isActive("link") &&
+                            editor.getAttributes("link").target !== "_self"
+                                ? "bg-blue-100 text-blue-500"
+                                : "bg-white text-zinc-600"
+                        }`}
+                        onClick={
+                            editor?.isActive("link") &&
+                            editor.getAttributes("link").target !== "_self"
+                                ? () => {
+                                      editor?.chain().focus().unsetLink().run();
+                                      setDropdownOpen(false);
+                                  }
+                                : () => {
+                                      setLink("external");
+                                      setDropdownOpen(false);
+                                  }
+                        }
+                    >
+                        <HiOutlineArrowTopRightOnSquare className="h-4 w-4 shrink-0 lg:h-5 lg:w-5" />
                         <span>Link</span>
                     </button>
                 </div>

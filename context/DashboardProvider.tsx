@@ -18,6 +18,18 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import { ArticleType, ChildrenType } from "@/types";
+import Heading from "@tiptap/extension-heading";
+
+const CustomHeading = Heading.extend({
+    addAttributes() {
+        return {
+            ...this.parent?.(),
+            id: {
+                default: "",
+            },
+        };
+    },
+});
 
 type StateType = {
     selectedArticleId: string;
@@ -171,10 +183,16 @@ function useDashboardContext() {
     const editor = useEditor({
         editorProps: {
             attributes: {
-                class: "px-3 pt-5 pb-12 h-full h-64 overflow-y-scroll lg:h-96 max-w-none prose prose-zinc prose-sm focus:outline-none lg:prose-base prose-headings:font-bold",
+                class: "px-3 pt-5 pb-12 h-64 overflow-y-scroll lg:h-96 max-w-none prose prose-zinc prose-sm focus:outline-none lg:prose-base prose-headings:font-bold",
             },
         },
-        extensions: [StarterKit, Link],
+        extensions: [
+            StarterKit.configure({
+                heading: false,
+            }),
+            Link,
+            CustomHeading,
+        ],
     });
 
     function showErrorMessage(error: unknown) {
