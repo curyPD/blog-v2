@@ -12,6 +12,8 @@ type NodeType =
     | "Heading 5"
     | "Heading 6";
 
+type HeadingLevelType = 1 | 2 | 3 | 4 | 5 | 6;
+
 export default function EditorNodeDropdownMenu() {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [selectedNode, setSelectedNode] = useState<NodeType>("Normal");
@@ -28,6 +30,41 @@ export default function EditorNodeDropdownMenu() {
     useEffect(() => {
         setDropdownOpen(false);
     }, [state.selectedArticleId]);
+
+    useEffect(() => {
+        if (!editor) return;
+        const onSelectionUpdate = function () {
+            const {
+                attrs,
+                type: { name },
+            } = editor.view.state.selection.$head.parent;
+            switch (name) {
+                case "paragraph": {
+                    setSelectedNode("Normal");
+                    break;
+                }
+                case "heading": {
+                    if (typeof attrs.level === "undefined")
+                        throw new Error(
+                            "Heading without level property detected"
+                        );
+
+                    const level: HeadingLevelType = attrs.level;
+                    setSelectedNode(`Heading ${level}`);
+                    break;
+                }
+                default: {
+                    throw new Error("Unidentified node type");
+                }
+            }
+        };
+
+        editor.on("selectionUpdate", onSelectionUpdate);
+
+        return () => {
+            editor.off("selectionUpdate", onSelectionUpdate);
+        };
+    }, [editor]);
 
     return (
         <div
