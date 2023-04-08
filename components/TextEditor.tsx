@@ -18,7 +18,7 @@ export default function TextEditor() {
             />
             <div
                 className={`rounded-sm border border-zinc-400 ${
-                    focused && "ring-1 ring-zinc-900 ring-offset-2"
+                    focused ? "ring-1 ring-zinc-900 ring-offset-2" : ""
                 }`}
             >
                 <EditorMenu />
