@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { auth } from "../firebase/firebase";
 import { useSignOut } from "react-firebase-hooks/auth";
@@ -25,14 +26,27 @@ export default function Header() {
                 }`}
             >
                 <Link
-                    className={`mr-auto text-sm font-extrabold focus:outline-none focus-visible:ring-1 ${
+                    className={`mr-auto flex items-center gap-3 focus:outline-none focus-visible:ring-1 ${
                         router.pathname === "/dashboard"
                             ? "focus-visible:ring-white focus-visible:ring-offset-zinc-900"
                             : "focus-visible:ring-zinc-900 focus-visible:ring-offset-white"
-                    } focus-visible:ring-offset-2 lg:text-base`}
+                    } focus-visible:ring-offset-2`}
                     href="/"
                 >
-                    Polyglot Dream
+                    <Image
+                        src={
+                            router.pathname === "/dashboard"
+                                ? "/logo-light.png"
+                                : "/logo.png"
+                        }
+                        alt="Polyglot Dream logo"
+                        width={56}
+                        height={56}
+                        className="h-6 w-auto"
+                    />
+                    <span className="hidden text-sm font-extrabold xs:inline lg:text-base">
+                        Polyglot Dream
+                    </span>
                 </Link>
                 {userData?.role.admin && (
                     <Link
