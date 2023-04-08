@@ -11,6 +11,7 @@ import useControlledForm from "@/hooks/useControlledForm";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import FormGridContainer from "@/components/FormGridContainer";
 import Message from "@/components/Message";
+import Head from "next/head";
 
 type StateType = {
     name: string;
@@ -61,6 +62,9 @@ export default function Signup() {
 
     return (
         <>
+            <Head>
+                <title>Polyglot Dream | Sign Up</title>
+            </Head>
             <Message
                 isError={true}
                 text={error?.message ?? "No errors on my watch 😎🚬"}

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { db } from "@/firebase/firebase";
 import { get, ref } from "firebase/database";
 import { ArticleType } from "../../types";
+import Head from "next/head";
 
 export default function Article({ article }: { article: ArticleType }) {
     const createdDate = new Intl.DateTimeFormat("en-US", {
@@ -16,6 +17,9 @@ export default function Article({ article }: { article: ArticleType }) {
 
     return (
         <>
+            <Head>
+                <title>{article.title}</title>
+            </Head>
             <main className="pt-14 pb-24">
                 <div className="container mx-auto px-4 xs:px-6 lg:max-w-screen-lg xl:px-0">
                     <h1 className="mb-8 text-3xl font-extrabold tracking-tighter text-zinc-900 md:mb-10 md:text-left md:text-4xl lg:text-6xl lg:leading-[1.1]">

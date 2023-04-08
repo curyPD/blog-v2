@@ -14,10 +14,6 @@ export default function Home({ articles }: { articles: ArticleType[] }) {
         <>
             <Head>
                 <title>Polyglot Dream</title>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
             </Head>
             <main className="pt-14 pb-24">
                 <div className="container mx-auto px-4 xs:px-6 lg:px-9 xl:max-w-screen-xl 2xl:px-0">

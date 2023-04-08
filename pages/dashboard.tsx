@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useUserData } from "@/context/UserDataProvider";
 import { useDashboard } from "@/context/DashboardProvider";
@@ -29,6 +30,9 @@ export default function Dashboard() {
 
     return (
         <>
+            <Head>
+                <title>Polyglot Dream | Dashboard</title>
+            </Head>
             <Message
                 isError={true}
                 text={state.errorMessage}

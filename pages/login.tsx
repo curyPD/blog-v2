@@ -8,6 +8,7 @@ import Label from "@/components/Label";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import FormGridContainer from "@/components/FormGridContainer";
 import Message from "@/components/Message";
+import Head from "next/head";
 type StateType = {
     email: string;
     password: string;
@@ -42,6 +43,9 @@ export default function Login() {
 
     return (
         <>
+            <Head>
+                <title>Polyglot Dream | Log In</title>
+            </Head>
             <Message
                 isError={true}
                 text={error?.message ?? "No errors on my watch 😎🚬"}

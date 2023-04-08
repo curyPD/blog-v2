@@ -16,6 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
+                <meta
+                    name="description"
+                    content="Polyglot Dream - Personal Blog About Language Acquisition"
+                    key="desc"
+                />
                 <link
                     rel="apple-touch-icon"
                     sizes="180x180"
@@ -41,6 +46,10 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <meta name="msapplication-TileColor" content="#00aba9" />
                 <meta name="theme-color" content="#ffffff" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
             </Head>
             <UserDataProvider>
                 <DashboardProvider>
