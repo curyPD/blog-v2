@@ -37,7 +37,10 @@ export default function ArticleDeleteModal() {
                 </div>
                 <div className="border-y border-zinc-300 px-5 py-4 text-sm text-zinc-900 lg:text-base">
                     Are you sure you want to delete{" "}
-                    <span className="font-semibold">"{state.title}"</span>?
+                    <span className="font-semibold">
+                        &quot;{state.title}&quot;
+                    </span>
+                    ?
                 </div>
                 <div className="flex gap-3 py-3 px-5">
                     <button

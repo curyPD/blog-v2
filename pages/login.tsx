@@ -103,7 +103,7 @@ export default function Login() {
                     </FormGridContainer>
 
                     <p className="mt-6 text-center text-xs text-zinc-500 lg:text-sm">
-                        Don't have an account yet?{" "}
+                        Don&apos;t have an account yet?{" "}
                         <Link
                             className="text-zinc-900 hover:underline focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
                             href="/signup"
