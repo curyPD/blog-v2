@@ -21,6 +21,21 @@ export default function App({ Component, pageProps }: AppProps) {
                     content="Polyglot Dream - Personal Blog About Language Acquisition"
                     key="desc"
                 />
+                <meta
+                    property="og:title"
+                    content="Polyglot Dream"
+                    key="ogtitle"
+                />
+                <meta
+                    property="og:description"
+                    content="Polyglot Dream - Personal Blog About Language Acquisition"
+                    key="ogdesc"
+                />
+                <meta
+                    property="og:image"
+                    content="/ogimage.png"
+                    key="ogimage"
+                />
                 <link
                     rel="apple-touch-icon"
                     sizes="180x180"
