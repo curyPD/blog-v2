@@ -19,6 +19,11 @@ export default function Article({ article }: { article: ArticleType }) {
         <>
             <Head>
                 <title>{article.title}</title>
+                <meta
+                    name="description"
+                    content={article.description}
+                    key="desc"
+                />
             </Head>
             <main className="pt-14 pb-24">
                 <div className="container mx-auto px-4 xs:px-6 lg:max-w-screen-lg xl:px-0">

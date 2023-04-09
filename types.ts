@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 export type ArticleType = {
     id: string;
     title: string;
+    description: string;
     created: string;
     last_modified: string;
     imageSm: string;

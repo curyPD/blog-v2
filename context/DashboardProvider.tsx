@@ -36,6 +36,7 @@ type StateType = {
     file: File | null;
     filePreviewURL: string;
     title: string;
+    description: string;
     articleIdToDelete: string;
     errorMessage: string;
     successMessage: string;
@@ -48,6 +49,7 @@ const initState: StateType = {
     file: null,
     filePreviewURL: "",
     title: "",
+    description: "",
     articleIdToDelete: "",
     errorMessage: "",
     successMessage: "",
@@ -57,6 +59,7 @@ const initState: StateType = {
 
 enum REDUCER_ACTION_TYPE {
     TITLE_INPUT,
+    DESCRIPTION_INPUT,
     FILE_INPUT,
     SELECT_ARTICLE,
     CANCEL_SELECT,
@@ -80,6 +83,13 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 throw new Error("action.payload missing in TITLE_INPUT action");
             return { ...state, title: action.payload.title };
         }
+        case REDUCER_ACTION_TYPE.DESCRIPTION_INPUT: {
+            if (!action.payload)
+                throw new Error(
+                    "action.payload missing in DESCRIPTION_INPUT action"
+                );
+            return { ...state, description: action.payload.description };
+        }
         case REDUCER_ACTION_TYPE.FILE_INPUT: {
             if (!action.payload)
                 throw new Error("action.payload missing in FILE_INPUT action");
@@ -91,11 +101,13 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 throw new Error(
                     "action.payload missing in SELECT_ARTICLE action"
                 );
-            const { title, filePreviewURL, selectedArticleId } = action.payload;
+            const { title, description, filePreviewURL, selectedArticleId } =
+                action.payload;
             return {
                 ...state,
                 selectedArticleId,
                 title,
+                description,
                 filePreviewURL,
                 file: null,
             };
@@ -105,6 +117,7 @@ function reducer(state: StateType, action: ReducerAction): StateType {
                 ...state,
                 selectedArticleId: "",
                 title: "",
+                description: "",
                 filePreviewURL: "",
                 file: null,
             };
@@ -236,6 +249,7 @@ function useDashboardContext() {
                         payload: {
                             ...state,
                             title: "",
+                            description: "",
                             filePreviewURL: "",
                             selectedArticleId: id,
                         },
@@ -250,8 +264,8 @@ function useDashboardContext() {
                     (a) => a.id === id
                 );
                 if (typeof article === "undefined")
-                    throw new Error("That's not funny >:(");
-                const { title, imageMd, content } = article;
+                    throw new Error("Selected article should exist");
+                const { title, description, imageMd, content } = article;
                 if (editor && !editor.isDestroyed) {
                     editor.commands.setContent(content);
                     dispatch({
@@ -259,6 +273,7 @@ function useDashboardContext() {
                         payload: {
                             ...state,
                             title,
+                            description,
                             filePreviewURL: imageMd,
                             selectedArticleId: id,
                         },
@@ -300,7 +315,13 @@ function useDashboardContext() {
     async function handleSubmit() {
         try {
             const html: string | undefined = editor?.getHTML();
-            if (!html || !state.title || !state.filePreviewURL) return;
+            if (
+                !html ||
+                !state.title ||
+                !state.description ||
+                !state.filePreviewURL
+            )
+                return;
             if (
                 state.selectedArticleId &&
                 state.selectedArticleId !== "fakeId"
@@ -308,6 +329,7 @@ function useDashboardContext() {
                 await submitEditedArticle(
                     state.selectedArticleId,
                     state.title,
+                    state.description,
                     html,
                     state.file
                 );
@@ -316,7 +338,12 @@ function useDashboardContext() {
                     throw new Error(
                         "file should be present if there's a filePreviedURL"
                     );
-                await writeNewArticle(state.title, state.file, html);
+                await writeNewArticle(
+                    state.title,
+                    state.description,
+                    state.file,
+                    html
+                );
             }
             handleCancelSelect();
             dispatch({

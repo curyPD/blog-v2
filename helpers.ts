@@ -36,6 +36,7 @@ export function resizeFile(
 
 export async function writeNewArticle(
     title: string,
+    description: string,
     file: File,
     content: string
 ) {
@@ -51,6 +52,7 @@ export async function writeNewArticle(
         const dateISO = new Date().toISOString();
         updates[`/articles/${newArticleKey}/id`] = newArticleKey;
         updates[`/articles/${newArticleKey}/title`] = title;
+        updates[`/articles/${newArticleKey}/description`] = description;
         updates[`/articles/${newArticleKey}/created`] = dateISO;
         updates[`/articles/${newArticleKey}/last_modified`] = dateISO;
         updates[`/articles/${newArticleKey}/imageSm`] = imageSmURL;
@@ -67,6 +69,7 @@ export async function writeNewArticle(
 export async function submitEditedArticle(
     id: string,
     title: string,
+    description: string,
     content: string,
     file: File | null
 ) {
@@ -81,6 +84,7 @@ export async function submitEditedArticle(
         }
         const dateISO = new Date().toISOString();
         updates[`/articles/${id}/title`] = title;
+        updates[`/articles/${id}/description`] = description;
         updates[`/articles/${id}/last_modified`] = dateISO;
         updates[`/articles/${id}/content`] = content;
 
