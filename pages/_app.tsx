@@ -5,11 +5,12 @@ import { Open_Sans } from "next/font/google";
 import UserDataProvider from "@/context/UserDataProvider";
 import Layout from "@/components/Layout";
 import DashboardProvider from "@/context/DashboardProvider";
+import ArticleLikesCommentsDataProvider from "@/context/ArticleLikesCommentsDataProvider";
 
 const openSans = Open_Sans({
     subsets: ["latin"],
     variable: "--font-open-sans",
-    display: "swap",
+    // display: "swap",
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -68,13 +69,15 @@ export default function App({ Component, pageProps }: AppProps) {
             </Head>
             <UserDataProvider>
                 <DashboardProvider>
-                    <div
-                        className={`${openSans.variable} flex min-h-screen flex-col font-sans`}
-                    >
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                    </div>
+                    <ArticleLikesCommentsDataProvider>
+                        <div
+                            className={`${openSans.variable} flex min-h-screen flex-col font-sans`}
+                        >
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                        </div>
+                    </ArticleLikesCommentsDataProvider>
                 </DashboardProvider>
             </UserDataProvider>
         </>

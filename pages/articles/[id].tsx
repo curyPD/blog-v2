@@ -1,12 +1,13 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-
+import Head from "next/head";
 import Footer from "@/components/Footer";
 
 import { db } from "@/firebase/firebase";
 import { get, ref } from "firebase/database";
 import { ArticleType } from "../../types";
-import Head from "next/head";
+
+import LikeButton from "@/components/LikeButton";
 
 export default function Article({ article }: { article: ArticleType }) {
     const createdDate = new Intl.DateTimeFormat("en-US", {
@@ -64,6 +65,7 @@ export default function Article({ article }: { article: ArticleType }) {
                         className="prose prose-sm prose-zinc mx-auto md:prose-base lg:prose-lg"
                     />
                 </div>
+                <LikeButton />
             </main>
             <Footer />
         </>

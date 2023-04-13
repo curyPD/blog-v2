@@ -10,6 +10,7 @@ export type ArticleType = {
     imageMd: string;
     imageLg: string;
     content: string;
+    likes: Record<string, boolean> | undefined;
 };
 
 export type UserDataType = {
@@ -17,6 +18,7 @@ export type UserDataType = {
     name: string;
     email: string;
     role: Record<string, boolean>;
+    liked_articles: Record<string, boolean> | undefined;
 };
 
 export type ChildrenType = { children: ReactElement };
