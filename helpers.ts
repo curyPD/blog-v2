@@ -60,7 +60,7 @@ export async function writeNewArticle(
         updates[`/articles/${newArticleKey}/imageLg`] = imageLgURL;
         updates[`/articles/${newArticleKey}/content`] = content;
 
-        update(ref(db), updates);
+        await update(ref(db), updates);
     } catch (err) {
         throw err;
     }
@@ -88,7 +88,7 @@ export async function submitEditedArticle(
         updates[`/articles/${id}/last_modified`] = dateISO;
         updates[`/articles/${id}/content`] = content;
 
-        update(ref(db), updates);
+        await update(ref(db), updates);
     } catch (err) {
         throw err;
     }
