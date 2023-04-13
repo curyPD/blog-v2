@@ -154,3 +154,27 @@ async function getResizedImageURLs(
         throw err;
     }
 }
+
+export async function addLike(userId: string, articleId: string) {
+    try {
+        console.log("Add like");
+        const updates: Record<string, boolean> = {};
+        updates[`/articles/${articleId}/likes/${userId}`] = true;
+        updates[`/users/${userId}/liked_articles/${articleId}`] = true;
+        await update(ref(db), updates);
+    } catch (err) {
+        throw err;
+    }
+}
+
+export async function removeLike(userId: string, articleId: string) {
+    try {
+        console.log("Remove like");
+        const updates: Record<string, null> = {};
+        updates[`/articles/${articleId}/likes/${userId}`] = null;
+        updates[`/users/${userId}/liked_articles/${articleId}`] = null;
+        await update(ref(db), updates);
+    } catch (err) {
+        throw err;
+    }
+}
