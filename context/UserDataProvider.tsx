@@ -14,9 +14,10 @@ import { User } from "firebase/auth";
 function useUserDataContext() {
     const [userData, setUserData] = useState<UserDataType | null>(null);
     const [userDataLoading, setUserDataLoading] = useState<boolean>(false);
+    const [userNameUpdating, setUserNameUpdating] = useState<boolean>(false);
     const [user] = useAuthState(auth);
     useEffect(() => {
-        if (!user) {
+        if (!user || userNameUpdating) {
             setUserData(null);
             return;
         }
@@ -42,10 +43,11 @@ function useUserDataContext() {
             }
             setUserDataLoading(false);
         }
-        getUserData();
-    }, [user]);
 
-    return { userData, userDataLoading };
+        getUserData();
+    }, [user, userNameUpdating]);
+
+    return { userData, userDataLoading, setUserNameUpdating };
 }
 
 type UseUserDataContextType = ReturnType<typeof useUserDataContext>;
@@ -53,6 +55,7 @@ type UseUserDataContextType = ReturnType<typeof useUserDataContext>;
 const initContextState: UseUserDataContextType = {
     userData: null,
     userDataLoading: false,
+    setUserNameUpdating: () => {},
 };
 
 export const UserDataContext =

@@ -12,7 +12,7 @@ import FormSubmitButton from "@/components/FormSubmitButton";
 import FormGridContainer from "@/components/FormGridContainer";
 import Message from "@/components/Message";
 import Head from "next/head";
-
+import { useUserData } from "@/context/UserDataProvider";
 type StateType = {
     name: string;
     email: string;
@@ -37,6 +37,8 @@ export default function Signup() {
 
     const router = useRouter();
 
+    const { setUserNameUpdating } = useUserData();
+
     async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
         setPasswordsMatch(true);
@@ -44,6 +46,7 @@ export default function Signup() {
             setPasswordsMatch(false);
             return;
         }
+        setUserNameUpdating(true);
         const credential = await createUserWithEmailAndPassword(
             input.email,
             input.password
@@ -58,6 +61,7 @@ export default function Signup() {
             });
             router.push("/");
         }
+        setUserNameUpdating(false);
     }
 
     return (
