@@ -11,17 +11,17 @@ export default function LikeButton() {
     } = useArticleLikesCommentsData();
 
     return (
-        <div className="">
+        <div className="mt-4 sm:fixed sm:bottom-14 sm:left-4 sm:mt-0">
             <button
                 disabled={!userCanLikeArticle || articleLoading}
                 onClick={handleClickLikeButton}
             >
                 <HiOutlineHeart
-                    className={`h-6 w-6 text-zinc-900 ${
+                    className={`h-5 w-5 text-zinc-900 md:h-6 md:w-6 ${
                         userLikedArticle ? "fill-zinc-900" : "fill-none"
                     }`}
                 />
-                <span>{numLikes}</span>
+                <span className="text-sm md:text-base">{numLikes}</span>
             </button>
         </div>
     );

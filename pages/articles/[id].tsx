@@ -64,8 +64,8 @@ export default function Article({ article }: { article: ArticleType }) {
                         dangerouslySetInnerHTML={{ __html: article.content }}
                         className="prose prose-sm prose-zinc mx-auto md:prose-base lg:prose-lg"
                     />
+                    <LikeButton />
                 </div>
-                <LikeButton />
             </main>
             <Footer />
         </>
